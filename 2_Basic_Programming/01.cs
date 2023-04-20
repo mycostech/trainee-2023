@@ -45,23 +45,23 @@ internal class NumberGuessingGame
                     }
                     else
                     {
-                        var correct_count = 0;
-                        var wrong_pos_count = 0;
+                        var correctCount = 0;
+                        var wrongPosCount = 0;
                         for (var i = 0; i < 4; i++)
                         {
                             if (inp[i] == quiz[i])
-                                correct_count++;
+                                correctCount++;
                             else if (quiz.Contains(inp[i]))
-                                wrong_pos_count++;
+                                wrongPosCount++;
                         }
 
-                        if (correct_count == 4)
+                        if (correctCount == 4)
                         {
                             Console.WriteLine("You WIN!!");
                             return;
                         }
 
-                        Console.WriteLine($"Wrong! (Correct = {correct_count}, contain but wrong position = {wrong_pos_count})");
+                        Console.WriteLine($"Wrong! (Correct = {correctCount}, contain but wrong position = {wrongPosCount})");
                         k++;
                     }
                 }
