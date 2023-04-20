@@ -1,79 +1,87 @@
-internal class NumberGuessingGame
+namespace HelloWorld
 {
-    public void Start()
+    internal class NumberGuessingGame
     {
-        char[] answerSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-
-        var rnd = new Random();
-        for (var i = 0; i < answerSet.Length; i++)
+        static void Start()
         {
-            var x = rnd.Next(0, answerSet.Length);
-            var y = rnd.Next(0, answerSet.Length);
-            var z = answerSet[x];
-            answerSet[x] = answerSet[y];
-            answerSet[y] = z;
-        }
+            char[] answerSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
 
-        char[] quiz = new char[4];
-        for (var i = 0; i < 4; i++)
-        {
-            quiz[i] = answerSet[i];
-        }
-
-        Console.WriteLine("Welcome to guessing number game. We have unique number in 4 digits.");
-        int k = 1;
-        while (k <= 3)
-        {
-            Console.Write("You guess: ");
-            var inp = Console.ReadLine();
-
-            if (string.IsNullOrEmpty(inp)) 
+            var rnd = new Random();
+            for (var i = 0; i < answerSet.Length; i++)
             {
-                Console.WriteLine("Invalid number");
+                var x = rnd.Next(0, answerSet.Length);
+                var y = rnd.Next(0, answerSet.Length);
+                var z = answerSet[x];
+                answerSet[x] = answerSet[y];
+                answerSet[y] = z;
             }
-            else
+
+            char[] quiz = new char[4];
+            for (var i = 0; i < 4; i++)
             {
-                if (inp.Length != 4)
+                quiz[i] = answerSet[i];
+            }
+
+            Console.WriteLine("Welcome to guessing number game. We have unique number in 4 digits.");
+            int k = 1;
+            while (k <= 3)
+            {
+                Console.Write("You guess: ");
+                var inp = Console.ReadLine();
+
+                if (string.IsNullOrEmpty(inp))
                 {
-                    Console.WriteLine("Must be 4 digits");
+                    Console.WriteLine("Invalid number");
                 }
                 else
                 {
-                    if (inp.Any(c => !char.IsDigit(c)))
+                    if (inp.Length != 4)
                     {
                         Console.WriteLine("Must be 4 digits");
                     }
                     else
                     {
-                        var correctCount = 0;
-                        var wrongPosCount = 0;
-                        for (var i = 0; i < 4; i++)
+                        if (inp.Any(c => !char.IsDigit(c)))
                         {
-                            if (inp[i] == quiz[i])
-                                correctCount++;
-                            else if (quiz.Contains(inp[i]))
-                                wrongPosCount++;
+                            Console.WriteLine("Must be 4 digits");
                         }
-
-                        if (correctCount == 4)
+                        else
                         {
-                            Console.WriteLine("You WIN!!");
-                            return;
-                        }
+                            var correctCount = 0;
+                            var wrongPosCount = 0;
+                            for (var i = 0; i < 4; i++)
+                            {
+                                if (inp[i] == quiz[i])
+                                    correctCount++;
+                                else if (quiz.Contains(inp[i]))
+                                    wrongPosCount++;
+                            }
 
-                        Console.WriteLine($"Wrong! (Correct = {correctCount}, contain but wrong position = {wrongPosCount})");
-                        k++;
+                            if (correctCount == 4)
+                            {
+                                Console.WriteLine("You WIN!!");
+                                return;
+                            }
+
+                            Console.WriteLine($"Wrong! (Correct = {correctCount}, contain but wrong position = {wrongPosCount})");
+                            k++;
+                        }
                     }
                 }
             }
-        }
 
-        Console.WriteLine("You LOSE +_+");
-        Console.Write("Answer: ");
-        for (var i = 0; i < 4; i++)
-        {
-            Console.Write(quiz[i]);
+            Console.WriteLine("You LOSE +_+");
+            Console.Write("Answer: ");
+            for (var i = 0; i < 4; i++)
+            {
+                Console.Write(quiz[i]);
+            }
+            Console.Write(Environment.NewLine);
         }
-        Console.Write(Environment.NewLine);
+        static void Main(string[] args)
+        {
+            Start();
+        }
     }
+
 }
