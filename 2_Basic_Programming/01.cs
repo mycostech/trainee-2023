@@ -1,28 +1,30 @@
+//Readme, i did not change to much thing in the file , just change the name of variables to be in a standard.
 internal class NumberGuessingGame
 {
-    public void Start()
+    // a function to start the game and game logic
+    public void StartGame()
     {
-        char[] answerSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+        char[] answerSets = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
 
         var rnd = new Random();
-        for (var i = 0; i < answerSet.Length; i++)
+        for (var i = 0; i < answerSets.Length; i++)
         {
-            var x = rnd.Next(0, answerSet.Length);
-            var y = rnd.Next(0, answerSet.Length);
-            var z = answerSet[x];
-            answerSet[x] = answerSet[y];
-            answerSet[y] = z;
+            var randomLength1 = rnd.Next(0, answerSets.Length);
+            var randomLength2 = rnd.Next(0, answerSets.Length);
+            var temp = answerSets[randomLength1];
+            answerSets[randomLength1] = answerSets[randomLength2];
+            answerSets[randomLength2] = temp;
         }
 
         char[] quiz = new char[4];
         for (var i = 0; i < 4; i++)
         {
-            quiz[i] = answerSet[i];
+            quiz[i] = answerSets[i];
         }
 
         Console.WriteLine("Welcome to guessing number game. We have unique number in 4 digits.");
-        int k = 1;
-        while (k <= 3)
+        int attemptTimes = 1;
+        while (attemptTimes <= 3)
         {
             Console.Write("You guess: ");
             var inp = Console.ReadLine();
@@ -45,24 +47,24 @@ internal class NumberGuessingGame
                     }
                     else
                     {
-                        var correct_count = 0;
-                        var wrong_pos_count = 0;
+                        var correctGuessCount = 0;
+                        var wrongPositionCount = 0;
                         for (var i = 0; i < 4; i++)
                         {
                             if (inp[i] == quiz[i])
-                                correct_count++;
+                                correctGuessCount++;
                             else if (quiz.Contains(inp[i]))
-                                wrong_pos_count++;
+                                wrongPositionCount++;
                         }
 
-                        if (correct_count == 4)
+                        if (correctGuessCount == 4)
                         {
                             Console.WriteLine("You WIN!!");
                             return;
                         }
 
-                        Console.WriteLine($"Wrong! (Correct = {correct_count}, contain but wrong position = {wrong_pos_count})");
-                        k++;
+                        Console.WriteLine($"Wrong! (Correct = {correctGuessCount}, contain but wrong position = {wrongPositionCount})");
+                        attemptTimes++;
                     }
                 }
             }
