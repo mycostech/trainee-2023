@@ -1,10 +1,17 @@
-namespace HelloWorld
-{
+//////////////////////////////////////////////////////////////////
+// This following source is about the game of guessing number   //
+//Rules:                                                        // 
+//1.The system will random four numbers from 0 to 9.            //
+//2.There are three chances for a player to guess those numbers.//
+//////////////////////////////////////////////////////////////////
+
     internal class NumberGuessingGame
     {
+
         static void Start()
         {
-            char[] answerSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+            // The numbers that will include into question by random 
+            char[] answerSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' }; 
 
             var rnd = new Random();
             for (var i = 0; i < answerSet.Length; i++)
@@ -20,11 +27,19 @@ namespace HelloWorld
             for (var i = 0; i < 4; i++)
             {
                 quiz[i] = answerSet[i];
-            }
+                Console.Write("\n" + answerSet[i] + "\n");
+        }
 
             Console.WriteLine("Welcome to guessing number game. We have unique number in 4 digits.");
-            int k = 1;
-            while (k <= 3)
+            int round = 1; // round is how many times that a player can fail.
+
+            IsItCorrect(round, quiz);
+
+        }
+
+        // This is the method for checking player anwser.
+        static void IsItCorrect(int r, char[] q) {
+            while (r <= 3) //Ask player for three times
             {
                 Console.Write("You guess: ");
                 var inp = Console.ReadLine();
@@ -51,9 +66,9 @@ namespace HelloWorld
                             var wrongPosCount = 0;
                             for (var i = 0; i < 4; i++)
                             {
-                                if (inp[i] == quiz[i])
+                                if (inp[i] == q[i])
                                     correctCount++;
-                                else if (quiz.Contains(inp[i]))
+                                else if (q.Contains(inp[i]))
                                     wrongPosCount++;
                             }
 
@@ -64,7 +79,7 @@ namespace HelloWorld
                             }
 
                             Console.WriteLine($"Wrong! (Correct = {correctCount}, contain but wrong position = {wrongPosCount})");
-                            k++;
+                            r++;
                         }
                     }
                 }
@@ -74,14 +89,14 @@ namespace HelloWorld
             Console.Write("Answer: ");
             for (var i = 0; i < 4; i++)
             {
-                Console.Write(quiz[i]);
+                Console.Write(q[i]);
             }
             Console.Write(Environment.NewLine);
         }
+
         static void Main(string[] args)
         {
             Start();
         }
     }
 
-}
