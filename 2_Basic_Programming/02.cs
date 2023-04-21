@@ -1,4 +1,3 @@
-
 class Equipment
 {
     public int ItemLevel { get; set; }
@@ -34,14 +33,7 @@ class RefineCalculator
                             }
                             else
                             {
-                                if (isVIP)
-                                {
-                                    e.RefineLevel = e.RefineLevel - 1;
-                                }
-                                else
-                                {
-                                    e.RefineLevel = 0;
-                                }
+                                vipCheck(e.RefineLevel, isVIP);
                             }
 
                         }
@@ -51,14 +43,7 @@ class RefineCalculator
                                 e.RefineLevel = e.RefineLevel + 1;
                             else
                             {
-                                if (isVIP)
-                                {
-                                    e.RefineLevel = e.RefineLevel - 1;
-                                }
-                                else
-                                {
-                                    e.RefineLevel = 0;
-                                }
+                                vipCheck(e.RefineLevel, isVIP);
                             }
                         }
                     }
@@ -74,14 +59,7 @@ class RefineCalculator
                                 e.RefineLevel = e.RefineLevel + 1;
                             else
                             {
-                                if (isVIP)
-                                {
-                                    e.RefineLevel = e.RefineLevel - 1;
-                                }
-                                else
-                                {
-                                    e.RefineLevel = 0;
-                                }
+                                vipCheck(e.RefineLevel, isVIP);
                             }
                         }
                         else
@@ -90,13 +68,7 @@ class RefineCalculator
                                 e.RefineLevel = e.RefineLevel + 1;
                             else
                             {
-                                if (isVIP) 
-                                {
-                                    e.RefineLevel = e.RefineLevel - 1;
-                                }
-                                else
-                                        e.RefineLevel = 0;
-                                }
+                                vipCheck(e.RefineLevel, isVIP);
                             }
                         }
                     }
@@ -112,10 +84,7 @@ class RefineCalculator
                                 e.RefineLevel = e.RefineLevel + 1;
                             else
                             {
-                                if (isVIP)
-                                    e.RefineLevel = e.RefineLevel - 1;
-                                else
-                                    e.RefineLevel = 0;
+                                vipCheck(e.RefineLevel, isVIP);
                             }
                         }
                         else
@@ -124,10 +93,7 @@ class RefineCalculator
                                 e.RefineLevel = e.RefineLevel + 1;
                             else
                             {
-                                if (isVIP)
-                                    e.RefineLevel = e.RefineLevel - 1;
-                                else
-                                    e.RefineLevel = 0;
+                                vipCheck(e.RefineLevel, isVIP);
                             }
                         }
                     }
@@ -144,22 +110,33 @@ class RefineCalculator
                             e.RefineLevel = e.RefineLevel + 1;
                         else
                         {
-                            if (isVIP)
-                                e.RefineLevel = e.RefineLevel - 1;
-                            else
-                                e.RefineLevel = 0;
+                            vipCheck(e.RefineLevel, isVIP);
                         }
                     }
                 }
             }
         }
-
-        //Random level number
-        public int RandomNumber()
-        {
-            var r = new Random();
-            var x = r.Next(0, 100);
-            return x;
-        }
     }
 
+    //Random level number
+    public int RandomNumber()
+    {
+        var r = new Random();
+        var x = r.Next(0, 100);
+        return x;
+    }
+
+    // Checking wherther player is vip or not
+    public int vipCheck(int RefineLevel ,bool isVIP)
+    {
+        if (isVIP)
+        {
+            RefineLevel = RefineLevel - 1;
+        }
+        else
+        {
+            RefineLevel = 0;
+        }
+        return RefineLevel;
+    }
+}
