@@ -22,11 +22,11 @@ class RefineCalculator
                 {
                     if (e.ItemLevel == 1)
                     {
-                        upgardeWeaponLevel(e.RefineLevel, isVIP, 60, 20);
+                        UpgardeWeaponLevel(e.RefineLevel, isVIP, 60, 20);
                     }
                     else if (e.ItemLevel == 2)
                     {
-                        upgardeWeaponLevel(e.RefineLevel, isVIP, 30, 15);
+                        UpgardeWeaponLevel(e.RefineLevel, isVIP, 30, 15);
                     }
                     else
                     {
@@ -36,7 +36,7 @@ class RefineCalculator
                         }
                         else 
                         {
-                            upgardeWeaponLevel(e.RefineLevel, isVIP, 40, 10);
+                            UpgardeWeaponLevel(e.RefineLevel, isVIP, 40, 10);
                         }
                     }
                 }
@@ -52,7 +52,7 @@ class RefineCalculator
                             e.RefineLevel = e.RefineLevel + 1;
                         else
                         {
-                            vipCheck(e.RefineLevel, isVIP);
+                            VipCheck(e.RefineLevel, isVIP);
                         }
                     }
                 }
@@ -69,7 +69,7 @@ class RefineCalculator
     }
 
     // Checking wherther player is vip or not
-    public int vipCheck(int RefineLevel ,bool isVIP)
+    public int VipCheck(int RefineLevel ,bool isVIP)
     {
         if (isVIP)
         {
@@ -82,7 +82,7 @@ class RefineCalculator
         return RefineLevel;
     }
 
-    public int upgardeWeaponLevel(int RefineLevel, bool isVIP, int criterionOne, int criterionTwo)
+    public int UpgardeWeaponLevel(int RefineLevel, bool isVIP, int criterionOne, int criterionTwo)
     {
         if (RefineLevel < 7)
         {
@@ -96,9 +96,8 @@ class RefineCalculator
             }
             else
             {
-                vipCheck(RefineLevel, isVIP);
+                VipCheck(RefineLevel, isVIP);
             }
-
         }
         else
         {
@@ -106,7 +105,7 @@ class RefineCalculator
                 RefineLevel = RefineLevel + 1;
             else
             {
-                vipCheck(RefineLevel, isVIP);
+                VipCheck(RefineLevel, isVIP);
             }
         }
         return RefineLevel;
