@@ -1,6 +1,7 @@
 class Equipment
 {
     public int ItemLevel { get; set; }
+    // Type of the item
     public string? Type { get; set; }
 
     /** Current Refine level **/
