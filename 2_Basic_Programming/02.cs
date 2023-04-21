@@ -21,56 +21,11 @@ class RefineCalculator
                 {
                     if (e.ItemLevel == 1)
                     {
-                        if (e.RefineLevel < 7)
-                        {
-                            e.RefineLevel = e.RefineLevel + 1;
-                        }
-                        else if (e.RefineLevel < 9)
-                        {
-                            if (RandomNumber() < 60)
-                            {
-                                e.RefineLevel = e.RefineLevel + 1;
-                            }
-                            else
-                            {
-                                vipCheck(e.RefineLevel, isVIP);
-                            }
-
-                        }
-                        else
-                        {
-                            if (RandomNumber() < 20)
-                                e.RefineLevel = e.RefineLevel + 1;
-                            else
-                            {
-                                vipCheck(e.RefineLevel, isVIP);
-                            }
-                        }
+                        upgardeWeaponLevel(e.RefineLevel, isVIP, 60, 20);
                     }
                     else if (e.ItemLevel == 2)
                     {
-                        if (e.RefineLevel < 7)
-                        {
-                            e.RefineLevel = e.RefineLevel + 1;
-                        }
-                        else if (e.RefineLevel < 9)
-                        {
-                            if (RandomNumber() < 30)
-                                e.RefineLevel = e.RefineLevel + 1;
-                            else
-                            {
-                                vipCheck(e.RefineLevel, isVIP);
-                            }
-                        }
-                        else
-                        {
-                            if (RandomNumber() < 15)
-                                e.RefineLevel = e.RefineLevel + 1;
-                            else
-                            {
-                                vipCheck(e.RefineLevel, isVIP);
-                            }
-                        }
+                        upgardeWeaponLevel(e.RefineLevel, isVIP, 30, 15);
                     }
                     else
                     {
@@ -78,23 +33,9 @@ class RefineCalculator
                         {
                             e.RefineLevel = e.RefineLevel + 1;
                         }
-                        else if (e.RefineLevel < 7)
+                        else 
                         {
-                            if (RandomNumber() < 40)
-                                e.RefineLevel = e.RefineLevel + 1;
-                            else
-                            {
-                                vipCheck(e.RefineLevel, isVIP);
-                            }
-                        }
-                        else
-                        {
-                            if (RandomNumber() < 10)
-                                e.RefineLevel = e.RefineLevel + 1;
-                            else
-                            {
-                                vipCheck(e.RefineLevel, isVIP);
-                            }
+                            upgardeWeaponLevel(e.RefineLevel, isVIP, 40, 10);
                         }
                     }
                 }
@@ -139,4 +80,35 @@ class RefineCalculator
         }
         return RefineLevel;
     }
+
+    public int upgardeWeaponLevel(int RefineLevel, bool isVIP, int criterionOne, int criterionTwo)
+    {
+        if (RefineLevel < 7)
+        {
+            RefineLevel = RefineLevel + 1;
+        }
+        else if (RefineLevel < 9)
+        {
+            if (RandomNumber() < criterionOne)
+            {
+                RefineLevel = RefineLevel + 1;
+            }
+            else
+            {
+                vipCheck(RefineLevel, isVIP);
+            }
+
+        }
+        else
+        {
+            if (RandomNumber() < criterionTwo)
+                RefineLevel = RefineLevel + 1;
+            else
+            {
+                vipCheck(RefineLevel, isVIP);
+            }
+        }
+        return RefineLevel;
+    }
+
 }
