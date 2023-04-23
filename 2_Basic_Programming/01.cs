@@ -6,7 +6,7 @@ internal class NumberGuessingGame
         char[] answerSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
         // create a random object
         var random = new Random();
-        //loop for swap value between randomIndexOne and randomIndexOne
+        //loop for swap value between randomIndexOne and randomIndextwo
         for (var i = 0; i < answerSet.Length; i++)
         {
             // for random value
