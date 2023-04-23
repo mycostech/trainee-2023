@@ -1,0 +1,124 @@
+--1.
+CREATE DATABASE myDB;
+GO
+
+USE myDB
+GO
+
+--2.
+CREATE TABLE Customers(
+	CustomerID int NOT NULL,
+	FirstName varchar(255),
+	LastName varchar(255),
+	Email varchar(255),
+	PhoneNumber varchar(255),
+	ClassCode int,
+	CONSTRAINT PK_Customer PRIMARY KEY(CustomerID)
+);
+GO
+
+--3.
+ALTER TABLE Customers
+ADD Age int;
+GO
+
+--4.
+INSERT INTO [dbo].[Customers]([CustomerID],[FirstName],[LastName],[Age],[Email],[PhoneNumber],[ClassCode])
+VALUES 
+	(1,'FirstA','LastA',20,'FirstA@gmail.com','0911234567',1),
+	(2,'FirstB','LastB',21,'FirstB@hotmail.com','0929876543',2),
+	(3,'FirstC','LastC',22,'FirstC@hotmail.com','0937894561',3),
+	(4,'FirstD','LastD',22,'FirstD@gmail.com','0941253654',2);
+GO
+
+--5.
+CREATE TABLE CustomerClass(
+	ClassCode int NOT NULL,
+	ClassDescription varchar(255)
+	CONSTRAINT PK_CustomerClass PRIMARY KEY (ClassCode)
+);
+GO
+
+--6.
+INSERT INTO [dbo].[CustomerClass]( ClassCode, ClassDescription)
+VALUES (1,'Classic'),
+	   (2,'Gold'),
+	   (3,'Platinum');
+GO
+
+--7.
+ALTER TABLE Customers
+ADD FOREIGN KEY (ClassCode) REFERENCES CustomerClass(ClassCode);
+GO
+
+--8
+SELECT * FROM Customers
+SELECT * FROM CustomerClass
+GO
+
+--9
+SELECT * FROM Customers
+WHERE FirstName = 'FirstD';
+GO
+
+--10
+SELECT FirstName, LastName, Age, ClassCode FROM Customers
+SELECT ClassCode, ClassDescription FROM CustomerClass
+GO
+
+--11
+SELECT DISTINCT Age FROM Customers
+GO
+
+--12
+SELECT * FROM Customers
+ORDER BY PhoneNumber ASC
+GO
+
+--13
+SELECT * FROM Customers
+WHERE Email LIKE '%hotmail%';
+GO
+
+--14
+SELECT MAX(ClassCode) AS ClassCode
+FROM Customers
+GO
+
+--15
+UPDATE Customers
+SET Email = 'NewMail@gmail.com'
+WHERE CustomerID = 1
+GO
+
+--16
+SELECT TOP 1 * FROM Customers
+GO
+
+--17
+SELECT ClassDescription From Customers
+WHERE PhoneNumber LIKE '%7894561';
+GO
+
+--18
+SELECT * FROM Customers
+LEFT JOIN CustomerClass
+ON CustomerClass.ClassCode = Customers.ClassCode
+WHERE CustomerClass.ClassDescription = 'Gold';
+GO
+
+--19
+DELETE FROM Customers WHERE Customers.FirstName = 'FirstD';
+GO
+
+--20
+CREATE VIEW CustomerDetail AS
+SELECT FirstName, LastName, Age, Email, PhoneNumber, CustomerClass.ClassDescription
+FROM Customers
+LEFT JOIN CustomerClass
+ON CustomerClass.ClassCode = Customers.ClassCode;
+GO
+
+--21 
+SELECT * FROM [CustomerDetail]
+GO
