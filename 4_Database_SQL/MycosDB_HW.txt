@@ -1,0 +1,122 @@
+1.	Write the correct SQL statement to create a new database called myDB.
+
+	->	CREATE DATABASE myDB;
+ 
+2.	Write the correct SQL statement to create a new table called Customers.
+-	CustomerID - INT (PK, not null)
+-	FirstName - VARCHAR
+-	LastName - VARCHAR
+-	Email - VARCHAR
+-	PhoneNumber - VARCHAR
+-	ClassCode - INT
+
+	->  CREATE TABLE Customers (
+		CustomerID int NOT NULL PRIMARY KEY,
+		FirstName varchar(255),
+		LastName varchar(255),
+		Email varchar(100),
+		PhoneNumber varchar(255),
+		ClassCode int);
+
+3.	Add a new column of type INT called Age.
+
+	->  ALTER TABLE Customers
+		ADD Age int;
+	
+4.	Insert 4 new records in the Customers table. (Picture 1)
+
+	->	INSERT INTO Customers (CustomerID, FirstName, LastName, Email, PhoneNumber, ClassCode, Age)
+		VALUES ('1', 'FirstA', 'LastA', 'FirstA@gmail.com', '0911234567', 1, 20),
+		('2', 'FirstB', 'LastB', 'FirstB@gmail.com', '0929876543', 2, 21),
+		('3', 'FirstC', 'LastC', 'FirstC@gmail.com', '0937894561', 3, 22),
+		('4', 'FirstD', 'LastD', 'FirstD@gmail.com', '0941253654', 2, 22);
+	
+5.	Write the correct SQL statement to create a new table called CustomerClass.	
+-	ClassCode - INT (PK, not null)
+-	ClassDescription - VARCHAR
+
+	->	CREATE TABLE CustomerClass (
+		ClassCode int NOT NULL PRIMARY KEY,
+		ClassDescription varchar(255));
+	
+6.	Insert 3 new records in the CustomerClass table. (Picture 2)
+
+	->	INSERT INTO CustomerClass (ClassCode, ClassDescription)
+		VALUES ('1', 'Classic'),
+		('2', 'Gold'),
+		('3', 'Platinum');
+		
+7.	Create a foreign key linking the Customer and CustomerClass tables.
+
+	->	ALTER TABLE Customers
+		ADD FOREIGN KEY (ClassCode) REFERENCES CustomerClass(ClassCode);
+	
+8.	Select all records of Customer and CustomerClass tables (Picture 1 and 2).
+
+	->	SELECT * FROM Customers
+		SELECT * FROM CustomerClass
+	
+9.	Select record from Customer table where the FirstName value is ‘FirstD’.
+
+	->	SELECT * FROM Customers WHERE FirstName = 'FirstD'
+	
+10.	Select all records of FirstName, LastName, Age, ClassCode, ClassDescription of Customer and CustomerClass table.
+
+	->	SELECT c.FirstName, c.LastName, c.Age, c.ClassCode, cc.ClassDescription 
+		FROM Customers c, CustomerClass cc 
+		Where c.ClassCode = cc.ClassCode;
+	
+11.	Select all the different values from Age column in the Customer table. 
+
+	->	Select distinct Age FROM Customers;
+	
+12.	Select all records from the Customers table, sort the result alphabetically by the column PhoneNumber.
+
+	->	select * from Customers order by PhoneNumber ASC;
+	
+13.	Select all records where the value of an Email column contains the word "hotmail".
+
+	->	select * from Customers where Email LIKE '%hotmail%'	
+	
+14.	Select the record with the highest value of the ClassCode column.
+
+	->	select MAX(ClassCode) from Customers;
+	
+15.	Update the Email column to new email of CustomerID value is 1.
+
+	->	UPDATE Customers
+		SET Email = 'FirstANew@gmail.com'
+		WHERE CustomerID = 1;
+
+16.	Select the last record of the Customer table.
+
+	->	select TOP 1 * from Customers order by CustomerID DESC
+
+	
+17.	Select the class description of the customer phone number included ‘7894561’.
+
+	->	select cc.ClassDescription 
+		from CustomerClass cc LEFT JOIN Customers c ON c.ClassCode = cc.ClassCode 
+		where c.PhoneNumber LIKE '%7894561%'
+	
+18.	Select all customers that their class = ‘Gold’
+
+	->	select * 
+		from Customers c LEFT JOIN CustomerClass cc ON c.ClassCode = cc.ClassCode 
+		where cc.ClassDescription = 'Gold'
+
+
+	
+19.	Delete the record from the Customers table where the FirstName value is ‘FirstD’.
+
+	->	DELETE FROM Customers WHERE FirstName='FirstD';
+	
+20.	Create view called CustomerDetail (Picture 3).
+
+	->	CREATE VIEW [CustomerDetail] AS
+		SELECT c.FirstName, c.LastName, c.Age, c.Email, c.PhoneNumber, cc.ClassDescription
+		FROM Customers c Left join CustomerClass cc ON c.ClassCode = cc.ClassCode
+	
+21.	Select all records of CustomerDetail view.
+
+	->	select * from [CustomerDetail]
