@@ -20,7 +20,7 @@ namespace ToDoAPI.Services
             var todoItems = await _context.Candidate.FirstOrDefaultAsync(c => c.CandidateId == CandidateId);
             try
             {
-                return new Candidate() { CandidateId = todoItems.CandidateId, Name = todoItems.Name };
+                return todoItems;
             }
             catch (Exception ex)
             {
