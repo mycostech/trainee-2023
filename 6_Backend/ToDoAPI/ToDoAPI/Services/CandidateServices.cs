@@ -74,6 +74,15 @@ namespace CandidateHW.Services
                 todo.LastName = contract.LastName;
                 todo.PhoneNumber = contract.PhoneNumber;
                 todo.Email = contract.Email;
+                todo.Attitude = contract.Attitude;
+                todo.Skills = contract.Skills;
+                todo.Rating = contract.Rating;
+                todo.Position= contract.Position;
+                todo.Gender= contract.Gender;
+                todo.Experience = contract.Experience;
+                todo.Personality = contract.Personality;
+                todo.cInputDate = contract.cInputDate;
+                todo.cAppointment = contract.cAppointment;
 
                 await _context.SaveChangesAsync();
             }

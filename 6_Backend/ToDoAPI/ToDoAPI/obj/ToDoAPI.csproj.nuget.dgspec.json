@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\self-learning\\Mycos\\ToDoAPI\\ToDoAPI\\ToDoAPI.csproj": {}
+    "D:\\self-learning\\trainee-2023\\6_Backend\\ToDoAPI\\ToDoAPI\\ToDoAPI.csproj": {}
   },
   "projects": {
-    "D:\\self-learning\\Mycos\\ToDoAPI\\ToDoAPI\\ToDoAPI.csproj": {
+    "D:\\self-learning\\trainee-2023\\6_Backend\\ToDoAPI\\ToDoAPI\\ToDoAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\self-learning\\Mycos\\ToDoAPI\\ToDoAPI\\ToDoAPI.csproj",
+        "projectUniqueName": "D:\\self-learning\\trainee-2023\\6_Backend\\ToDoAPI\\ToDoAPI\\ToDoAPI.csproj",
         "projectName": "ToDoAPI",
-        "projectPath": "D:\\self-learning\\Mycos\\ToDoAPI\\ToDoAPI\\ToDoAPI.csproj",
+        "projectPath": "D:\\self-learning\\trainee-2023\\6_Backend\\ToDoAPI\\ToDoAPI\\ToDoAPI.csproj",
         "packagesPath": "C:\\Users\\ACER\\.nuget\\packages\\",
-        "outputPath": "D:\\self-learning\\Mycos\\ToDoAPI\\ToDoAPI\\obj\\",
+        "outputPath": "D:\\self-learning\\trainee-2023\\6_Backend\\ToDoAPI\\ToDoAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ACER\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Jh9mSzgJP90N5aJrdfvQlarmELRGtuolRPZcFdIYJPFEMrVbAx2qGXCESi1UOHMFinFM4JNPri67XuoIZLO7yg==",
+  "dgSpecHash": "Cdm5D9T4iKu0P4lk9RGnbn9HS3x1y8X6UX4sJ/WgIHi4MdUlS1DSrEshZXv6wV+ay5l7rTC/8WncZscSpqt8Zg==",
   "success": true,
-  "projectFilePath": "D:\\self-learning\\Mycos\\ToDoAPI\\ToDoAPI\\ToDoAPI.csproj",
+  "projectFilePath": "D:\\self-learning\\trainee-2023\\6_Backend\\ToDoAPI\\ToDoAPI\\ToDoAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ACER\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\ACER\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
