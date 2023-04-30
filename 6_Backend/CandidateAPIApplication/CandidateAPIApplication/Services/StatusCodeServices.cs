@@ -1,7 +1,7 @@
-﻿using CandidateAPIApplication.Data;
+﻿using CandidateAPIApplication.Contacts;
+using CandidateAPIApplication.Data;
 using CandidateAPIApplication.Models;
 using CandidateAPIApplication.Services.Interfaces;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace CandidateAPIApplication.Services
@@ -15,10 +15,34 @@ namespace CandidateAPIApplication.Services
             _contextCandidate = contextCandidate;
         }
 
-        public Task<IActionResult> DeleteStatusCode(int id)
+        public async Task DeleteStatusCode(int id)
         {
+            try
+            {
+                var finData = await _contextCandidate.StatusCandidateProfile.FindAsync(id);
+                _contextCandidate.StatusCandidateProfile.Remove(finData);
+                _contextCandidate.SaveChanges();
+            }catch (Exception ex)
+            {
 
-            throw new NotImplementedException();
+            }
+        }
+
+        public async Task<List<CandidatesModel>> GetAllCandidateHasStatusByID(int id)
+        {
+            var items = await (
+                from statuscode in _contextCandidate.StatusCandidateProfile
+                join candidate in _contextCandidate.CandidatesProfile on statuscode.StatusCodeID equals candidate.StatusCodeID
+                where (statuscode.StatusCodeID == id )
+                select new CandidatesModel
+                {
+                    FirstName = candidate.FirstName,
+                    LastName = candidate.LastName,
+                    Email = candidate.Email,
+                    PhoneNumber = candidate.PhoneNumber,
+                    StatusCodeID = statuscode.StatusCodeID,
+                }).ToListAsync();
+            return items;
         }
 
         public async Task<List<StatusModel>> GetStatusAll()
@@ -36,15 +60,32 @@ namespace CandidateAPIApplication.Services
             return null;
         }
 
-        public Task<IActionResult> PostStatusCode(StatusModel dataStatus)
+        public async Task PostStatusCode(StatusModel dataStatus)
         {
-
-            throw new NotImplementedException();
+            try
+            {
+                await _contextCandidate.StatusCandidateProfile.AddAsync(dataStatus);
+                _contextCandidate.SaveChanges();
+            }catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            
         }
 
-        public Task<IActionResult> UpdateStatusCode(int id, string statusDescription)
+        public async Task UpdateStatusCode(int id, string statusDescription)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var findData = await _contextCandidate.StatusCandidateProfile.FindAsync(id);
+                findData.StatusDescription = statusDescription;
+                await _contextCandidate.SaveChangesAsync();
+            }catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
+
+
     }
 }

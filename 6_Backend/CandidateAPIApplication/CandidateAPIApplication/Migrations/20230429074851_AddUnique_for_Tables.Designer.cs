@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CandidateAPIApplication.Migrations
 {
     [DbContext(typeof(CandidatesContext))]
-    [Migration("20230427073749_UpdateCandidateTable")]
-    partial class UpdateCandidateTable
+    [Migration("20230429074851_AddUnique_for_Tables")]
+    partial class AddUnique_for_Tables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,36 +26,35 @@ namespace CandidateAPIApplication.Migrations
 
             modelBuilder.Entity("CandidateAPIApplication.Models.CandidatesModel", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("CandidateId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CandidateId"));
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StatusCodeID")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("CandidateId");
+
+                    b.HasIndex("CandidateId")
+                        .IsUnique();
 
                     b.HasIndex("StatusCodeID");
 
@@ -76,18 +75,21 @@ namespace CandidateAPIApplication.Migrations
 
                     b.HasKey("StatusCodeID");
 
-                    b.ToTable("StatusModel");
+                    b.HasIndex("StatusCodeID")
+                        .IsUnique();
+
+                    b.ToTable("StatusCandidateProfile");
                 });
 
             modelBuilder.Entity("CandidateAPIApplication.Models.CandidatesModel", b =>
                 {
-                    b.HasOne("CandidateAPIApplication.Models.StatusModel", "StatusCode")
+                    b.HasOne("CandidateAPIApplication.Models.StatusModel", "StatusCodes")
                         .WithMany()
                         .HasForeignKey("StatusCodeID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("StatusCode");
+                    b.Navigation("StatusCodes");
                 });
 #pragma warning restore 612, 618
         }

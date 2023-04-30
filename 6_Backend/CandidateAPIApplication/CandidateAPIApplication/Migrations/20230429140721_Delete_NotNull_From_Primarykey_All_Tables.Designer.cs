@@ -3,6 +3,7 @@ using CandidateAPIApplication.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CandidateAPIApplication.Migrations
 {
     [DbContext(typeof(CandidatesContext))]
-    partial class CandidatesContextModelSnapshot : ModelSnapshot
+    [Migration("20230429140721_Delete_NotNull_From_Primarykey_All_Tables")]
+    partial class Delete_NotNull_From_Primarykey_All_Tables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,21 +51,19 @@ namespace CandidateAPIApplication.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CandidateId"));
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PathImage")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PathResume")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StatusCodeID")
@@ -87,6 +88,7 @@ namespace CandidateAPIApplication.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommentScoreId"));
 
                     b.Property<string>("Comments")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Scores")
@@ -100,28 +102,6 @@ namespace CandidateAPIApplication.Migrations
                     b.ToTable("CommentsAndScoresProfile");
                 });
 
-            modelBuilder.Entity("CandidateAPIApplication.Models.DateAppointmentsModel", b =>
-                {
-                    b.Property<int>("AppointmentID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AppointmentID"));
-
-                    b.Property<string>("EndAppointment")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StartAppointment")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("AppointmentID");
-
-                    b.HasIndex("AppointmentID")
-                        .IsUnique();
-
-                    b.ToTable("DateAppointmentProfile");
-                });
-
             modelBuilder.Entity("CandidateAPIApplication.Models.StatusModel", b =>
                 {
                     b.Property<int>("StatusCodeID")
@@ -131,6 +111,7 @@ namespace CandidateAPIApplication.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StatusCodeID"));
 
                     b.Property<string>("StatusDescription")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("StatusCodeID");
@@ -163,7 +144,7 @@ namespace CandidateAPIApplication.Migrations
             modelBuilder.Entity("CandidateAPIApplication.Models.CandidatesModel", b =>
                 {
                     b.HasOne("CandidateAPIApplication.Models.StatusModel", "StatusCodes")
-                        .WithMany("ListCandidates")
+                        .WithMany("candidates")
                         .HasForeignKey("StatusCodeID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -183,7 +164,7 @@ namespace CandidateAPIApplication.Migrations
 
             modelBuilder.Entity("CandidateAPIApplication.Models.StatusModel", b =>
                 {
-                    b.Navigation("ListCandidates");
+                    b.Navigation("candidates");
                 });
 #pragma warning restore 612, 618
         }

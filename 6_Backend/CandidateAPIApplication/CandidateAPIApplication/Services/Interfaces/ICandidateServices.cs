@@ -15,6 +15,7 @@ namespace CandidateAPIApplication.Services.Interfaces
         public Task Register(RegisterContact dataRegister);
         public Task<LoginResponse> Login(string firstName, string lastName, string email);
         public JwtSecurityToken GetToken(List<Claim> authClaim);
-
+        public Task<CandidateAndStatusDetail> GetCandidateAndStatus(int id);
+        public Task<List<CandidateAndStatusDetail>> GetAllCandidateAndStatus();
     }
 }

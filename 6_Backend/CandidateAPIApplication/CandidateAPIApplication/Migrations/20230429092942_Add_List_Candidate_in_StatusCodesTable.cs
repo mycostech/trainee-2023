@@ -5,7 +5,7 @@
 namespace CandidateAPIApplication.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateTable_FK : Migration
+    public partial class Add_List_Candidate_in_StatusCodesTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

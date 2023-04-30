@@ -72,6 +72,8 @@ namespace CandidateAPIApplication
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<ICandidateServices, CandidateServices>();
             builder.Services.AddScoped<IStatusCodeServices, StatusCodeServices>();
+            builder.Services.AddScoped<ICommentAndScoreServices, CommentAndScoreServices>();
+            builder.Services.AddScoped<IDateAppointmentServices, DateAppointmentServices>();
 
             var app = builder.Build();
 

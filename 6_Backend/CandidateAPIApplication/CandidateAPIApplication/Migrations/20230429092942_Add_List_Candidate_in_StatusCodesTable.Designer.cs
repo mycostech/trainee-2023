@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CandidateAPIApplication.Migrations
 {
     [DbContext(typeof(CandidatesContext))]
-    [Migration("20230427110118_UpdateCandidateTable_FK")]
-    partial class UpdateCandidateTable_FK
+    [Migration("20230429092942_Add_List_Candidate_in_StatusCodesTable")]
+    partial class Add_List_Candidate_in_StatusCodesTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -53,6 +53,9 @@ namespace CandidateAPIApplication.Migrations
 
                     b.HasKey("CandidateId");
 
+                    b.HasIndex("CandidateId")
+                        .IsUnique();
+
                     b.HasIndex("StatusCodeID");
 
                     b.ToTable("CandidatesProfile");
@@ -72,18 +75,26 @@ namespace CandidateAPIApplication.Migrations
 
                     b.HasKey("StatusCodeID");
 
-                    b.ToTable("StatusCandidate");
+                    b.HasIndex("StatusCodeID")
+                        .IsUnique();
+
+                    b.ToTable("StatusCandidateProfile");
                 });
 
             modelBuilder.Entity("CandidateAPIApplication.Models.CandidatesModel", b =>
                 {
                     b.HasOne("CandidateAPIApplication.Models.StatusModel", "StatusCodes")
-                        .WithMany()
+                        .WithMany("Candidates")
                         .HasForeignKey("StatusCodeID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("StatusCodes");
+                });
+
+            modelBuilder.Entity("CandidateAPIApplication.Models.StatusModel", b =>
+                {
+                    b.Navigation("Candidates");
                 });
 #pragma warning restore 612, 618
         }

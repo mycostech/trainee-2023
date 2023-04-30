@@ -7,7 +7,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.Extensions.Configuration;
 
 namespace CandidateAPIApplication.Services
 {
@@ -30,7 +29,7 @@ namespace CandidateAPIApplication.Services
                 await _contextCandidate.SaveChangesAsync();
             }catch (Exception ex)
             {
-               
+                throw new Exception(ex.Message);
             }
         }
 
@@ -53,9 +52,43 @@ namespace CandidateAPIApplication.Services
             return await _contextCandidate.CandidatesProfile.ToListAsync();
         }
 
+        public async Task<List<CandidateAndStatusDetail>> GetAllCandidateAndStatus()
+        {
+            var item = await (
+                from candidate in _contextCandidate.CandidatesProfile
+                join statuscode in _contextCandidate.StatusCandidateProfile on candidate.StatusCodeID equals statuscode.StatusCodeID
+                select new CandidateAndStatusDetail
+                {
+                    FirstName = candidate.FirstName,
+                    LastName = candidate.LastName,
+                    Email = candidate.Email,
+                    Phone = candidate.PhoneNumber,
+                    StatusDescription = statuscode.StatusDescription
+                }).ToListAsync();
+            return item;
+        }
+
+        public async Task<CandidateAndStatusDetail> GetCandidateAndStatus(int id)
+        {
+            var item = await (
+                from candidate in _contextCandidate.CandidatesProfile
+                join statuscode in _contextCandidate.StatusCandidateProfile on candidate.StatusCodeID equals statuscode.StatusCodeID
+                where (candidate.CandidateId == id)
+                select new CandidateAndStatusDetail
+                {
+                    FirstName = candidate.FirstName,
+                    LastName = candidate.LastName,
+                    Email = candidate.Email,
+                    Phone = candidate.PhoneNumber,
+                    StatusDescription = statuscode.StatusDescription
+                }).FirstOrDefaultAsync();
+            return item;
+        }
+
         public async Task<CandidatesModel> GetCandidatesByID(int id)
         {
             var findData = await _contextCandidate.CandidatesProfile.FirstOrDefaultAsync(x => x.CandidateId == id);
+            Console.WriteLine(findData.StatusCodes);
             if (findData != null)
             {
                 return new CandidatesModel() 
@@ -64,9 +97,16 @@ namespace CandidateAPIApplication.Services
                     LastName = findData.LastName,
                     Email = findData.Email,
                     PhoneNumber = findData.PhoneNumber,
+                    StatusCodes = findData.StatusCodes,
                 };
             }
             return null;
+        }
+
+        public async Task GetCandidateWithJoin(int id)
+        {
+            var findData = await _contextCandidate.CandidatesProfile.FindAsync();
+            
         }
 
         public JwtSecurityToken GetToken(List<Claim> authClaim)
@@ -113,14 +153,6 @@ namespace CandidateAPIApplication.Services
             {
                 throw new Exception("Username are duplicated.");
             }
-
-            //var newRegister = new RegisterContact
-            //{
-            //    FirstName = dataRegister.FirstName,
-            //    LastName = dataRegister.LastName,
-            //    Email = dataRegister.Email,
-            //    Phone = dataRegister.Phone,
-            //};
 
             var newCandidate = new CandidatesModel
             {

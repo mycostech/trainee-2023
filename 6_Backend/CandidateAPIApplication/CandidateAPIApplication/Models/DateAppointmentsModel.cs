@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CandidateAPIApplication.Models
 {
@@ -8,7 +8,10 @@ namespace CandidateAPIApplication.Models
         [Key]
         public int AppointmentID { get; set; }
 
-        public string StartAppointment { get; set; }
-        public string EndAppointment { get; set; }
+        //[ForeignKey(nameof(CandidateProfile))]
+        //public int CandidateID { get; set; }
+        //public CandidatesModel CandidateProfile { get; set; }
+        public string? StartAppointment { get; set; }
+        public string? EndAppointment { get; set; }
     }
 }
