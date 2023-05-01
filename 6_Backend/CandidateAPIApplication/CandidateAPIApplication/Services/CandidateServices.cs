@@ -25,7 +25,7 @@ namespace CandidateAPIApplication.Services
         {
             try
             {
-                _contextCandidate.CandidatesProfile.Add(dataCandidate);
+                _contextCandidate.CandidatesProfiles.Add(dataCandidate);
                 await _contextCandidate.SaveChangesAsync();
             }catch (Exception ex)
             {
@@ -37,8 +37,8 @@ namespace CandidateAPIApplication.Services
         {
             try
             {
-                var findata = await _contextCandidate.CandidatesProfile.FindAsync(id);
-                _contextCandidate.CandidatesProfile.Remove(findata);
+                var finData = await _contextCandidate.CandidatesProfiles.FindAsync(id);
+                _contextCandidate.CandidatesProfiles.Remove(finData);
                 await _contextCandidate.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -49,14 +49,14 @@ namespace CandidateAPIApplication.Services
 
         public async Task<List<CandidatesModel>> GetAllCandidate()
         {
-            return await _contextCandidate.CandidatesProfile.ToListAsync();
+            return await _contextCandidate.CandidatesProfiles.ToListAsync();
         }
 
         public async Task<List<CandidateAndStatusDetail>> GetAllCandidateAndStatus()
         {
-            var item = await (
-                from candidate in _contextCandidate.CandidatesProfile
-                join statuscode in _contextCandidate.StatusCandidateProfile on candidate.StatusCodeID equals statuscode.StatusCodeID
+            var items = await (
+                from candidate in _contextCandidate.CandidatesProfiles
+                join statuscode in _contextCandidate.StatusCandidatesProfiles on candidate.StatusCodeID equals statuscode.StatusCodeID
                 select new CandidateAndStatusDetail
                 {
                     FirstName = candidate.FirstName,
@@ -65,14 +65,14 @@ namespace CandidateAPIApplication.Services
                     Phone = candidate.PhoneNumber,
                     StatusDescription = statuscode.StatusDescription
                 }).ToListAsync();
-            return item;
+            return items;
         }
 
         public async Task<CandidateAndStatusDetail> GetCandidateAndStatus(int id)
         {
-            var item = await (
-                from candidate in _contextCandidate.CandidatesProfile
-                join statuscode in _contextCandidate.StatusCandidateProfile on candidate.StatusCodeID equals statuscode.StatusCodeID
+            var items = await (
+                from candidate in _contextCandidate.CandidatesProfiles
+                join statuscode in _contextCandidate.StatusCandidatesProfiles on candidate.StatusCodeID equals statuscode.StatusCodeID
                 where (candidate.CandidateId == id)
                 select new CandidateAndStatusDetail
                 {
@@ -82,12 +82,12 @@ namespace CandidateAPIApplication.Services
                     Phone = candidate.PhoneNumber,
                     StatusDescription = statuscode.StatusDescription
                 }).FirstOrDefaultAsync();
-            return item;
+            return items;
         }
 
         public async Task<CandidatesModel> GetCandidatesByID(int id)
         {
-            var findData = await _contextCandidate.CandidatesProfile.FirstOrDefaultAsync(x => x.CandidateId == id);
+            var findData = await _contextCandidate.CandidatesProfiles.FirstOrDefaultAsync(x => x.CandidateId == id);
             Console.WriteLine(findData.StatusCodes);
             if (findData != null)
             {
@@ -103,11 +103,11 @@ namespace CandidateAPIApplication.Services
             return null;
         }
 
-        public async Task GetCandidateWithJoin(int id)
-        {
-            var findData = await _contextCandidate.CandidatesProfile.FindAsync();
+        //public async Task GetCandidateWithJoin(int id)
+        //{
+        //    var findData = await _contextCandidate.CandidatesProfile.FindAsync();
             
-        }
+        //}
 
         public JwtSecurityToken GetToken(List<Claim> authClaim)
         {
@@ -124,7 +124,7 @@ namespace CandidateAPIApplication.Services
 
         public async Task<LoginResponse> Login(string firstName, string lastName, string email)
         {
-            var findData = await _contextCandidate.CandidatesProfile
+            var findData = await _contextCandidate.CandidatesProfiles
                 .FirstOrDefaultAsync(i => i.FirstName == firstName && i.Email == email);
             if (findData != null && findData.LastName == lastName)
             {
@@ -149,7 +149,7 @@ namespace CandidateAPIApplication.Services
         public async Task Register(RegisterContact dataRegister)
         {
             //var findData = await _contextCandidate.CandidatesProfile.FirstOrDefaultAsync(i=>i.Email == dataRegister.Email);
-            if (await _contextCandidate.CandidatesProfile.AnyAsync(u=>u.Email == dataRegister.Email))
+            if (await _contextCandidate.CandidatesProfiles.AnyAsync(u=>u.Email == dataRegister.Email))
             {
                 throw new Exception("Username are duplicated.");
             }
@@ -163,7 +163,7 @@ namespace CandidateAPIApplication.Services
                 StatusCodeID = 1,
             };
 
-            _contextCandidate.CandidatesProfile.Add(newCandidate);
+            _contextCandidate.CandidatesProfiles.Add(newCandidate);
             await _contextCandidate.SaveChangesAsync();
         }
 
@@ -171,7 +171,7 @@ namespace CandidateAPIApplication.Services
         {
             try
             {
-                var findData = await _contextCandidate.CandidatesProfile.FirstOrDefaultAsync(i => i.CandidateId == id);
+                var findData = await _contextCandidate.CandidatesProfiles.FirstOrDefaultAsync(i => i.CandidateId == id);
                 findData.FirstName = dataCandidate.FirstName;
                 findData.LastName = dataCandidate.LastName;
                 findData.PhoneNumber = dataCandidate.PhoneNumber;

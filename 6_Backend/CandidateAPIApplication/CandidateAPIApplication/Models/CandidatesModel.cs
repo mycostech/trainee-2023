@@ -21,6 +21,9 @@ namespace CandidateAPIApplication.Models
         public string? PathImage { get; set; }
         public string? PathResume { get; set; }
 
+        public int? DateAppointmentId { get; set; }
+        public DateAppointmentsModel DateAppointments { get; set; }
+
         [ForeignKey(nameof(StatusCodes))]
         public int StatusCodeID { get; set; }
 

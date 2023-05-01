@@ -19,8 +19,8 @@ namespace CandidateAPIApplication.Services
         {
             try
             {
-                var finData = await _contextCandidate.StatusCandidateProfile.FindAsync(id);
-                _contextCandidate.StatusCandidateProfile.Remove(finData);
+                var findData = await _contextCandidate.StatusCandidatesProfiles.FindAsync(id);
+                _contextCandidate.StatusCandidatesProfiles.Remove(findData);
                 _contextCandidate.SaveChanges();
             }catch (Exception ex)
             {
@@ -31,8 +31,8 @@ namespace CandidateAPIApplication.Services
         public async Task<List<CandidatesModel>> GetAllCandidateHasStatusByID(int id)
         {
             var items = await (
-                from statuscode in _contextCandidate.StatusCandidateProfile
-                join candidate in _contextCandidate.CandidatesProfile on statuscode.StatusCodeID equals candidate.StatusCodeID
+                from statuscode in _contextCandidate.StatusCandidatesProfiles
+                join candidate in _contextCandidate.CandidatesProfiles on statuscode.StatusCodeID equals candidate.StatusCodeID
                 where (statuscode.StatusCodeID == id )
                 select new CandidatesModel
                 {
@@ -47,12 +47,12 @@ namespace CandidateAPIApplication.Services
 
         public async Task<List<StatusModel>> GetStatusAll()
         {
-            return await _contextCandidate.StatusCandidateProfile.ToListAsync();
+            return await _contextCandidate.StatusCandidatesProfiles.ToListAsync();
         }
 
         public async Task<StatusModel> GetStatusByID(int id)
         {
-            var findData = await _contextCandidate.StatusCandidateProfile.FirstAsync(i=>i.StatusCodeID == id);
+            var findData = await _contextCandidate.StatusCandidatesProfiles.FirstAsync(i=>i.StatusCodeID == id);
             if (findData != null)
             {
                 return findData;
@@ -64,7 +64,7 @@ namespace CandidateAPIApplication.Services
         {
             try
             {
-                await _contextCandidate.StatusCandidateProfile.AddAsync(dataStatus);
+                await _contextCandidate.StatusCandidatesProfiles.AddAsync(dataStatus);
                 _contextCandidate.SaveChanges();
             }catch (Exception ex)
             {
@@ -77,7 +77,7 @@ namespace CandidateAPIApplication.Services
         {
             try
             {
-                var findData = await _contextCandidate.StatusCandidateProfile.FindAsync(id);
+                var findData = await _contextCandidate.StatusCandidatesProfiles.FindAsync(id);
                 findData.StatusDescription = statusDescription;
                 await _contextCandidate.SaveChangesAsync();
             }catch (Exception ex)

@@ -17,7 +17,7 @@ namespace CandidateAPIApplication.Services
         {
             try
             {
-                await _contextDateAppoint.DateAppointmentProfile.AddAsync(dataDateAppointment);
+                await _contextDateAppoint.DateAppointmentProfiles.AddAsync(dataDateAppointment);
                 _contextDateAppoint.SaveChanges();
             }catch (Exception ex) 
             {
@@ -29,8 +29,8 @@ namespace CandidateAPIApplication.Services
         {
             try
             {
-                var findData = await _contextDateAppoint.DateAppointmentProfile.FirstOrDefaultAsync(i => i.AppointmentID == id);
-                _contextDateAppoint.DateAppointmentProfile.Remove(findData);
+                var findData = await _contextDateAppoint.DateAppointmentProfiles.FirstOrDefaultAsync(i => i.AppointmentID == id);
+                _contextDateAppoint.DateAppointmentProfiles.Remove(findData);
                 _contextDateAppoint.SaveChanges();
             }catch (Exception ex)
             {
@@ -40,14 +40,14 @@ namespace CandidateAPIApplication.Services
 
         public async Task<List<DateAppointmentsModel>> GetAllDateAppointment()
         {
-            return await _contextDateAppoint.DateAppointmentProfile.ToListAsync();
+            return await _contextDateAppoint.DateAppointmentProfiles.ToListAsync();
         }
 
         public async Task<DateAppointmentsModel> GetDateAppointmentById(int id)
         {
             try
             {
-                var findData = await _contextDateAppoint.DateAppointmentProfile.FirstOrDefaultAsync(i => i.AppointmentID == id);
+                var findData = await _contextDateAppoint.DateAppointmentProfiles.FirstOrDefaultAsync(i => i.AppointmentID == id);
                 return findData;
             }catch (ArgumentException ex)
             {
@@ -59,7 +59,7 @@ namespace CandidateAPIApplication.Services
         {
             try
             {
-                var findData = await _contextDateAppoint.DateAppointmentProfile.FirstOrDefaultAsync(i=>i.AppointmentID == id);
+                var findData = await _contextDateAppoint.DateAppointmentProfiles.FirstOrDefaultAsync(i=>i.AppointmentID == id);
                 findData.StartAppointment = dataDateAppointment.StartAppointment;
                 findData.EndAppointment = dataDateAppointment.EndAppointment;
                 _contextDateAppoint.SaveChanges();

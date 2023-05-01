@@ -3,11 +3,10 @@ using CandidateAPIApplication.Models;
 using CandidateAPIApplication.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace CandidateAPIApplication.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class CandidatesController : ControllerBase

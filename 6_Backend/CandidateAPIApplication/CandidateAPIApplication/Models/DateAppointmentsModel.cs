@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace CandidateAPIApplication.Models
 {
@@ -13,5 +13,9 @@ namespace CandidateAPIApplication.Models
         //public CandidatesModel CandidateProfile { get; set; }
         public string? StartAppointment { get; set; }
         public string? EndAppointment { get; set; }
+
+        [JsonIgnore]
+        public List<CandidatesModel>? ListCandidate { get; set; }
+
     }
 }

@@ -9,11 +9,11 @@ namespace CandidateAPIApplication.Data
 
         public CandidatesContext(DbContextOptions<CandidatesContext> option): base(option) { }
 
-        public DbSet<CandidatesModel> CandidatesProfile { get; set; }
-        public DbSet<StatusModel> StatusCandidateProfile { get; set; }
-        public DbSet<CommentsScoresModel> CommentsAndScoresProfile { get; set; }
+        public DbSet<CandidatesModel> CandidatesProfiles { get; set; }
+        public DbSet<StatusModel> StatusCandidatesProfiles { get; set; }
+        public DbSet<CommentsScoresModel> CommentsAndScoresProfiles { get; set; }
         public DbSet<CandidatesAndCommentsModel> CandidatesComments { get; set; }
-        public DbSet<DateAppointmentsModel> DateAppointmentProfile { get; set; }
+        public DbSet<DateAppointmentsModel> DateAppointmentProfiles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder model)
         {
@@ -44,6 +44,12 @@ namespace CandidateAPIApplication.Data
             model.Entity<DateAppointmentsModel>()
                 .HasIndex(col => col.AppointmentID)
                 .IsUnique();
+
+            model.Entity<DateAppointmentsModel>()
+                .HasMany<CandidatesModel>(date => date.ListCandidate)
+                .WithOne(candidate => candidate.DateAppointments)
+                .HasForeignKey(candidate=>candidate.DateAppointmentId);
+            
         }
     }
 }
