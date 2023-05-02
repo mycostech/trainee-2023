@@ -33,6 +33,10 @@ namespace ToDoAPI.Data
         public string InterviewDate { get; set; }
 
         public string PhoneNumber { get; set; }
+        public string ResumeFilePath { get; set; }
+        public string ProfilePicPath { get; set; }
+
+        public string CVPath { get; set; }
     }
     public class Status
     {
@@ -56,6 +60,17 @@ namespace ToDoAPI.Data
         public int Score { get; set; }
 
         public string ScoreTypeDescription { get; set; }
+    }
+
+    public class Comment
+    {
+        [Key] 
+        public int id { get; set; }
+        [ForeignKey(nameof(Candidate))]
+        public int CandidateId { get; set;}
+        public Candidate Candidate { get; set;}
+
+        public string CommentText { get; set; }
     }
 
 }

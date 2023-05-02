@@ -19,18 +19,18 @@ namespace ToDoAPI.Services
             return await _context.Evaluation.Where(e => e.CandidateId == candidateId).ToListAsync();
         }
 
-        public async Task<Evaluation> UpdateScore(int candidateId, int scoreType, int score)
+        public async Task<Evaluation> UpdateScore(int candidateId, Evaluation evaluation)
         {
-            var evaluation = await _context.Evaluation.FirstOrDefaultAsync(e => e.CandidateId == candidateId);
-            if (evaluation == null)
+            var todo = await _context.Evaluation.FirstOrDefaultAsync(e => e.CandidateId == candidateId);
+            if (todo == null)
             {
                 throw new Exception("Evaluation not found for candidate and score type");
             }
-            evaluation.ScoreType = scoreType;
-            evaluation.Score = score;
+            todo.ScoreType = evaluation.ScoreType;
+            todo.Score = evaluation.Score;
             await _context.SaveChangesAsync();
 
-            return evaluation;
+            return todo;
         }
 
         public async Task<Evaluation> InsertScore(int candidateId, int score, string scoreTypeDescription)

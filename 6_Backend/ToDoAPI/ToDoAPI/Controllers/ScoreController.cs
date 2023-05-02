@@ -8,7 +8,7 @@ namespace ToDoAPI.Controllers
 {
     [Route("api/score")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ScoreController : ControllerBase
     {
         
@@ -31,13 +31,13 @@ namespace ToDoAPI.Controllers
             return evaluation;
         }
 
-        [HttpPut("{candidateId}/{scoreType}/{score}")]
-        public async Task<ActionResult<Evaluation>> UpdateScore(int candidateId, int scoreType, int score)
+        [HttpPut("{CandidateId}")]
+        public async Task<ActionResult<Evaluation>> UpdateScore([FromRoute] int CandidateId, Evaluation evaluation)
         {
             try
             {
-                var evaluation = await _scoreService.UpdateScore(candidateId, scoreType, score);
-                return evaluation;
+                var eva = await _scoreService.UpdateScore(CandidateId, evaluation);
+                return eva;
             }
             catch (Exception ex)
             {

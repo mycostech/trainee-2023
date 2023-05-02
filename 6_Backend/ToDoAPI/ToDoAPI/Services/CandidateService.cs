@@ -24,7 +24,7 @@ namespace ToDoAPI.Services
             }
             catch (Exception ex)
             {
-                throw new Exception("Candidate not found");
+                throw new Exception(ex.Message);
             }
         }
         public async Task<Candidate> UpdateCandidate(int CandidateId, Candidate candidate)
@@ -38,6 +38,9 @@ namespace ToDoAPI.Services
                 todo.Email = candidate.Email;
                 todo.InterviewDate = candidate.InterviewDate;
                 todo.Score = candidate.Score;
+                todo.ResumeFilePath = candidate.ResumeFilePath;
+                todo.ProfilePicPath = candidate.ProfilePicPath;
+                todo.CVPath = candidate.CVPath;
 
                 await _context.SaveChangesAsync();
 
@@ -59,7 +62,7 @@ namespace ToDoAPI.Services
             try
             {
 
-                _context.Candidate.AddRange(candidate);
+                _context.Candidate.Add(candidate);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException ex)
