@@ -9,10 +9,10 @@ namespace Candidate.Data
         public int Attitude { get; set; }
         public int TeamPlayer { get; set; }
         public int Personality { get; set; }
-        public string Comment { get; set; }
+        public string? Comment { get; set; }
         public float Evaluation { get; set; }
         [Key]
         public Guid UserId { get; set; }
-        public User User_Score { get; set; }
+        public User? UserScore { get; set; }
     }
 }

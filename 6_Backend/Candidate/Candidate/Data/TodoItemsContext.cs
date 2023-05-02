@@ -22,7 +22,6 @@ namespace Candidate.Data
         public DbSet<Score> Scores { get; set; }
         public DbSet<UrlFile> UrlFiles { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
-        public DbSet<Notification> Notifications { get; set; }
         #endregion
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -30,28 +29,23 @@ namespace Candidate.Data
             builder
                 .Entity<User>()
                 .HasOne(e => e.OwnedFile)
-                .WithOne(e => e.User_File)
+                .WithOne(e => e.UserFile)
                 .OnDelete(DeleteBehavior.Cascade);
-            //builder
-            //    .Entity<Score>()
-            //    .HasOne(e => e.User_Score)
-            //    .WithOne(e => e.OwnedScore)
-            //    .OnDelete(DeleteBehavior.Cascade);
-            //builder
-            //    .Entity<Picture>()
-            //    .HasOne(e => e.User_Picture)
-            //    .WithOne(e => e.OwnedPicture)
-            //    .OnDelete(DeleteBehavior.Cascade);
-            //builder
-            //    .Entity<Notification>()
-            //    .HasOne(e => e.User_Notification)
-            //    .WithOne(e => e.OwnedNotification)
-            //    .OnDelete(DeleteBehavior.Cascade);
-            //builder
-            //    .Entity<Appointment>()
-            //    .HasOne(e => e.User_Appointment)
-            //    .WithOne(e => e.User_Appointment)
-            //    .OnDelete(DeleteBehavior.Cascade);
+            builder
+                .Entity<User>()
+                .HasOne(e => e.OwnedScore)
+                .WithOne(e => e.UserScore)
+                .OnDelete(DeleteBehavior.Cascade);
+            builder
+                .Entity<User>()
+                .HasOne(e => e.OwnedPicture)
+                .WithOne(e => e.UserPicture)
+                .OnDelete(DeleteBehavior.Cascade);
+            builder
+                .Entity<User>()
+                .HasOne(e => e.OwnedAppointment)
+                .WithOne(e => e.UserAppointment)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

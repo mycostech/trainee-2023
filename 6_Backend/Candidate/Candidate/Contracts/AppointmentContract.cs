@@ -1,12 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Candidate.Data
+namespace Candidate.Contracts
 {
-    public class Appointment
+    public class AppointmentContract
     {
         public DateTime? Meet { get; set; }
-        [Key]
         public Guid UserId { get; set; }
-        public User? UserAppointment { get; set; }
     }
 }

@@ -5,9 +5,9 @@ namespace Candidate.Data
 {
     public class Picture
     {
-        public string Image { get; set; }
+        public string? Image { get; set; }
         [Key]
         public Guid UserId { get; set; }
-        public User User_Picture { get; set; }
+        public User? UserPicture { get; set; }
     }
 }

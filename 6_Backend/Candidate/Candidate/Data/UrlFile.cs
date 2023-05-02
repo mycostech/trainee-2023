@@ -10,7 +10,7 @@ namespace Candidate.Data
         public string? File { get; set; } = null; 
         [Key]
         public Guid UserId { get; set; }
-        public User User_File { get; set; }
+        public User? UserFile { get; set; }
 
     }
 }

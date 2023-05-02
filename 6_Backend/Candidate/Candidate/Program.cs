@@ -21,7 +21,7 @@ public class Program
         builder.Services.AddDbContext<TodoItemsContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("candidateContext")));
         #region Services
-        builder.Services.AddScoped<ITodoService, TodoService>();
+        builder.Services.AddScoped<ICandidateService, CandidateService>();
         #endregion
         var app = builder.Build();
 

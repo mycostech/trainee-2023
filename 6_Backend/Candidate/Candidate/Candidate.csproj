@@ -21,12 +21,10 @@
 
   <ItemGroup>
     <None Remove="Data\" />
-    <None Remove="Services\" />
     <None Remove="Contracts\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
-    <Folder Include="Services\" />
     <Folder Include="Contracts\" />
   </ItemGroup>
 </Project>
