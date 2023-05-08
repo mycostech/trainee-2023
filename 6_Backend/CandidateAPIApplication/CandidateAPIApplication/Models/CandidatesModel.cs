@@ -21,14 +21,13 @@ namespace CandidateAPIApplication.Models
         public string? PathImage { get; set; }
         public string? PathResume { get; set; }
 
+        [JsonIgnore]
         public int? DateAppointmentId { get; set; }
-        public DateAppointmentsModel DateAppointments { get; set; }
-
-        [ForeignKey(nameof(StatusCodes))]
-        public int StatusCodeID { get; set; }
 
         [JsonIgnore]
-        public StatusModel? StatusCodes { get; set; }
+        public DateAppointmentsModel? DateAppointments { get; set; }
+
+        public int StatusCodeID { get; set; }
 
         [JsonIgnore]
         public List<CandidatesAndCommentsModel>? ListCandidateAndComment { get; set; } 

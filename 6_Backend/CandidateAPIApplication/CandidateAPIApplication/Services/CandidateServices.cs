@@ -21,11 +21,36 @@ namespace CandidateAPIApplication.Services
             _configuration = configs;
         }
 
-        public async Task CreateCandidate(CandidatesModel dataCandidate)
+        public async Task ChangeStatusCode(int id, int statusCode)
+        {
+            try
+            { 
+                var findData = await _contextCandidate.CandidatesProfiles.FirstOrDefaultAsync(i=>i.CandidateId == id);
+                findData.StatusCodeID = statusCode;
+
+                await _contextCandidate.SaveChangesAsync();
+            }catch (Exception ex)
+            {
+
+            }
+        }
+
+        public async Task CreateCandidate(CandidateUploadData dataCandidate)
         {
             try
             {
-                _contextCandidate.CandidatesProfiles.Add(dataCandidate);
+                var newcandidate = new CandidatesModel
+                {
+                    CandidateId = dataCandidate.CandidateID,
+                    FirstName = dataCandidate.FirstName,
+                    LastName = dataCandidate.LastName,
+                    Email = dataCandidate.Email,
+                    PhoneNumber = dataCandidate.PhoneNumber,
+                    PathImage = dataCandidate.ImageName,
+                    PathResume = dataCandidate.ResumeName,
+                    StatusCodeID = 1,
+                };
+                _contextCandidate.CandidatesProfiles.Add(newcandidate);
                 await _contextCandidate.SaveChangesAsync();
             }catch (Exception ex)
             {
@@ -59,6 +84,7 @@ namespace CandidateAPIApplication.Services
                 join statuscode in _contextCandidate.StatusCandidatesProfiles on candidate.StatusCodeID equals statuscode.StatusCodeID
                 select new CandidateAndStatusDetail
                 {
+                    CandidateId = candidate.CandidateId,
                     FirstName = candidate.FirstName,
                     LastName = candidate.LastName,
                     Email = candidate.Email,
@@ -76,6 +102,7 @@ namespace CandidateAPIApplication.Services
                 where (candidate.CandidateId == id)
                 select new CandidateAndStatusDetail
                 {
+                    CandidateId = candidate.CandidateId,
                     FirstName = candidate.FirstName,
                     LastName = candidate.LastName,
                     Email = candidate.Email,
@@ -88,26 +115,23 @@ namespace CandidateAPIApplication.Services
         public async Task<CandidatesModel> GetCandidatesByID(int id)
         {
             var findData = await _contextCandidate.CandidatesProfiles.FirstOrDefaultAsync(x => x.CandidateId == id);
-            Console.WriteLine(findData.StatusCodes);
             if (findData != null)
             {
                 return new CandidatesModel() 
                 {
+                    CandidateId= findData.CandidateId,
                     FirstName = findData.FirstName,
                     LastName = findData.LastName,
                     Email = findData.Email,
                     PhoneNumber = findData.PhoneNumber,
-                    StatusCodes = findData.StatusCodes,
+                    PathImage = findData.PathImage,
+                    PathResume = findData.PathResume,
+                    StatusCodeID = findData.StatusCodeID,
                 };
             }
             return null;
         }
 
-        //public async Task GetCandidateWithJoin(int id)
-        //{
-        //    var findData = await _contextCandidate.CandidatesProfile.FindAsync();
-            
-        //}
 
         public JwtSecurityToken GetToken(List<Claim> authClaim)
         {
@@ -177,7 +201,8 @@ namespace CandidateAPIApplication.Services
                 findData.PhoneNumber = dataCandidate.PhoneNumber;
                 findData.Email = dataCandidate.Email;
                 findData.StatusCodeID = dataCandidate.StatusCodeID;
-
+                findData.PathResume = dataCandidate.PathResume;
+                findData.PathImage = dataCandidate.PathImage;
                 await _contextCandidate.SaveChangesAsync();
             }
             catch (Exception err)

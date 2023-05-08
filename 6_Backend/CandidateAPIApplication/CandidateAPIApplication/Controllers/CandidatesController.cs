@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CandidateAPIApplication.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("[controller]")]
     public class CandidatesController : ControllerBase
@@ -31,7 +31,7 @@ namespace CandidateAPIApplication.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostCandidateProfile([FromBody] CandidatesModel dataCandidate)
+        public async Task<IActionResult> PostCandidateProfile([FromForm] CandidateUploadData dataCandidate)
         {
             await _servicesCandidate.CreateCandidate(dataCandidate);
             return StatusCode(201);
@@ -89,6 +89,14 @@ namespace CandidateAPIApplication.Controllers
         public async Task<List<CandidateAndStatusDetail>> GetAllCandidateAndDetail()
         {
             return await _servicesCandidate.GetAllCandidateAndStatus();
+        }
+
+        [HttpPut("ChangeStatusCode/{id}")]
+        public async Task<IActionResult> ChangeCandidateStatus([FromRoute] int id, [FromBody] int statusCode)
+        {
+            Console.WriteLine(statusCode);
+            await _servicesCandidate.ChangeStatusCode(id,statusCode);
+            return Ok();
         }
     }
 }

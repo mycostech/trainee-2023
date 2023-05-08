@@ -4,8 +4,8 @@ using CandidateAPIApplication.Services;
 using CandidateAPIApplication.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using System.Text;
 
 namespace CandidateAPIApplication
@@ -15,13 +15,27 @@ namespace CandidateAPIApplication
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
             // Add services to the container.
-            
+
             builder.Services.AddControllers();
             builder.Services.AddDbContext<CandidatesContext>(option =>
                 option.UseSqlServer(builder.Configuration.GetConnectionString("CandidateContext"))
             );
+
+            builder.Services.AddCors(option =>
+            {
+                option.AddPolicy(name: MyAllowSpecificOrigins,
+                    policy =>
+                    {
+                        policy.AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .SetIsOriginAllowed(
+                            origin => true
+                            );
+
+                    });
+            });
 
             builder.Services.AddAuthentication(Options =>
             {
@@ -87,7 +101,7 @@ namespace CandidateAPIApplication
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.MapControllers();
 

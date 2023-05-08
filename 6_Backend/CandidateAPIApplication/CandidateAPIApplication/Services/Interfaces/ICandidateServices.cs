@@ -9,7 +9,7 @@ namespace CandidateAPIApplication.Services.Interfaces
     {
         public Task<List<CandidatesModel>> GetAllCandidate();
         public Task<CandidatesModel> GetCandidatesByID(int id);
-        public Task CreateCandidate(CandidatesModel dataCandidate);
+        public Task CreateCandidate(CandidateUploadData dataCandidate);
         public Task UpdateCandidate(int id, CandidatesModel dataCandidate);
         public Task DeleteCandidateByID(int id);
         public Task Register(RegisterContact dataRegister);
@@ -17,5 +17,6 @@ namespace CandidateAPIApplication.Services.Interfaces
         public JwtSecurityToken GetToken(List<Claim> authClaim);
         public Task<CandidateAndStatusDetail> GetCandidateAndStatus(int id);
         public Task<List<CandidateAndStatusDetail>> GetAllCandidateAndStatus();
+        public Task ChangeStatusCode(int id, int statusCode);
     }
 }
