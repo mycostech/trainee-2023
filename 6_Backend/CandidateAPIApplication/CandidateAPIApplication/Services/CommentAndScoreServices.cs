@@ -43,6 +43,12 @@ namespace CandidateAPIApplication.Services
             return await _contexComment.CommentsAndScoresProfiles.ToListAsync();
         }
 
+        public async Task<List<CommentsScoresModel>> GetAllCommentAndScoresByCandidateId(int candidateId)
+        {
+               var findData = await _contexComment.CommentsAndScoresProfiles.Where(comment=>comment.CandidateId == candidateId).ToListAsync();
+               return findData;
+        }
+
         public async Task<CommentsScoresModel> GetCommentAndScoreByID(int id)
         {
             try
@@ -60,6 +66,7 @@ namespace CandidateAPIApplication.Services
             try
             {
                 var findData = await _contexComment.CommentsAndScoresProfiles.FirstOrDefaultAsync(i=>i.CommentScoreId == id);
+                findData.CandidateId = dataCommentScore.CandidateId;
                 findData.Comments = dataCommentScore.Comments;
                 findData.Scores = dataCommentScore.Scores;
                 _contexComment.SaveChanges();

@@ -4,6 +4,7 @@ using CandidateAPIApplication.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CandidateAPIApplication.Migrations
 {
     [DbContext(typeof(CandidatesContext))]
-    partial class CandidatesContextModelSnapshot : ModelSnapshot
+    [Migration("20230509032635_Delete_table_CommentAndCandidate")]
+    partial class Delete_table_CommentAndCandidate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

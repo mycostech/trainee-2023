@@ -12,7 +12,6 @@ namespace CandidateAPIApplication.Data
         public DbSet<CandidatesModel> CandidatesProfiles { get; set; }
         public DbSet<StatusModel> StatusCandidatesProfiles { get; set; }
         public DbSet<CommentsScoresModel> CommentsAndScoresProfiles { get; set; }
-        public DbSet<CandidatesAndCommentsModel> CandidatesComments { get; set; }
         public DbSet<DateAppointmentsModel> DateAppointmentProfiles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder model)
@@ -29,27 +28,9 @@ namespace CandidateAPIApplication.Data
                 .HasIndex(col => col.CommentScoreId)
                 .IsUnique();
 
-            model.Entity<CandidatesAndCommentsModel>().HasKey(col => new { col.CandidateId, col.CommentScoreId });
-
-            model.Entity<CandidatesAndCommentsModel>()
-                .HasOne<CandidatesModel>(col => col.Candidates)
-                .WithMany(col => col.ListCandidateAndComment)
-                .HasForeignKey(col => col.CandidateId);
-
-            model.Entity<CandidatesAndCommentsModel>()
-                .HasOne<CommentsScoresModel>(col => col.CommentsScores)
-                .WithMany(col => col.ListCandidateAndComment)
-                .HasForeignKey(col => col.CommentScoreId);
-
             model.Entity<DateAppointmentsModel>()
                 .HasIndex(col => col.AppointmentID)
                 .IsUnique();
-
-            model.Entity<DateAppointmentsModel>()
-                .HasMany<CandidatesModel>(date => date.ListCandidate)
-                .WithOne(candidate => candidate.DateAppointments)
-                .HasForeignKey(candidate=>candidate.DateAppointmentId);
-            
         }
     }
 }

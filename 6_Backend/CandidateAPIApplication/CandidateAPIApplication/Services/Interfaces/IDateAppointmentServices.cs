@@ -9,5 +9,6 @@ namespace CandidateAPIApplication.Services.Interfaces
         public Task UpdateDateAppointment(int id, DateAppointmentsModel dataDateAppointment);
         public Task DeleteDateAppointmentById(int id);
         public Task CreateDateAppointment(DateAppointmentsModel dataDateAppointment);
+        public Task<DateAppointmentsModel> GetDateAppointmentsByCandidateId(int candidateId);
     }
 }

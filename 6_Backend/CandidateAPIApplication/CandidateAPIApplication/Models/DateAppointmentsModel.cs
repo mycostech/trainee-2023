@@ -7,15 +7,9 @@ namespace CandidateAPIApplication.Models
     {
         [Key]
         public int AppointmentID { get; set; }
-
-        //[ForeignKey(nameof(CandidateProfile))]
-        //public int CandidateID { get; set; }
-        //public CandidatesModel CandidateProfile { get; set; }
+        public int CandidateId { get; set; }
         public string? StartAppointment { get; set; }
         public string? EndAppointment { get; set; }
-
-        [JsonIgnore]
-        public List<CandidatesModel>? ListCandidate { get; set; }
 
     }
 }

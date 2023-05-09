@@ -9,5 +9,6 @@ namespace CandidateAPIApplication.Services.Interfaces
         public Task CreateCommentAndScore(CommentsScoresModel dataCommentScore);
         public Task UpdateCommentAndScore(int id, CommentsScoresModel dataCommentScore);
         public Task DeleteCommentAndScore(int id);
+        public Task<List<CommentsScoresModel>> GetAllCommentAndScoresByCandidateId(int candidateId);
     }
 }

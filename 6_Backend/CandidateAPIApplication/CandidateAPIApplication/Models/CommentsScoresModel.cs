@@ -8,11 +8,8 @@ namespace CandidateAPIApplication.Models
     {
         [Key]
         public int CommentScoreId { get; set; }
-
+        public int CandidateId { get; set; }
         public string? Comments { get; set; }
         public int Scores { get; set; }
-
-        [JsonIgnore]
-        public List<CandidatesAndCommentsModel>? ListCandidateAndComment { get; set; }
     }
 }

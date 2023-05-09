@@ -7,20 +7,24 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { getCandidateById } from "../Api/ApiCandidate";
+import IsLoadingPage from "../Pages/IsLoadingPage";
 
 export default function EditForm() {
     const { handleSubmit, register, formState: { isSubmitting } } = CandidateForm()
     const navigate = useNavigate()
     const params = useParams()
-    const [ candidate, setCandidate ] = useState()
+    const [ candidate, setCandidate ] = useState<ICandidateForm>()
+    const [ isLoading, setIsLoading ] = useState<boolean>(false)
     useEffect(()=>{
         const fData = async() =>{
             try{
+                setIsLoading(true)
                 let data = await getCandidateById(parseInt(params.id!))
-                console.log(data)
                 setCandidate(data)
             }catch(err){
 
+            }finally{
+                setIsLoading(false)
             }
         }
         fData()
@@ -37,6 +41,11 @@ export default function EditForm() {
 
     }
 
+    if(isLoading){
+        return(
+            <IsLoadingPage />
+        );
+    }else{
     return (
         <form action="" onSubmit={handleSubmit(SendUpdateForm, onSubmitError)} >
             <Box sx={{display:"flex", alignItems:"center", margin:"auto"}}>
@@ -72,4 +81,5 @@ export default function EditForm() {
 
         </form>
     );
+    }
 }

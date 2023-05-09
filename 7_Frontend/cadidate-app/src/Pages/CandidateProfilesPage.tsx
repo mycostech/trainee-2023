@@ -40,7 +40,7 @@ export default function CandidateProfilesPage(){
     useEffect(()=>{
         const fData =  async()=>{
             try{
-                let fData = await getAllCandidate()
+                const fData = await getAllCandidate()
                 console.log(fData)
                 setFetchCandidate(fData)
             }catch(err){

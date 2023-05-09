@@ -20,7 +20,6 @@ const validationCandidate = z.object({
     resume:z.instanceof(FileList),
 })
 
-
 function CandidateForm(){
     const form = useForm<ICandidateForm>({
         resolver: zodResolver(validationCandidate),

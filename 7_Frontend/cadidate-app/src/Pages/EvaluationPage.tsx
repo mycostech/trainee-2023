@@ -37,7 +37,7 @@ export default function EvaluationPage(){
                 <TextField id="outlined-basic" size="small" variant="outlined" sx={{marginTop:"12px", width:"350px"}} />
                 <Button endIcon={<FilterAltIcon />} sx={{color:"black"}} ><p>Filter</p></Button>
             </div>
-            <Grid container spacing={2} justifyContent={"flex-start"} alignContent={"center"}>
+            <Grid container spacing={2} justifyContent={"flex-start"} margin={"auto"} width={1450}>
                 {ShowCandidateEvaluation()}
             </Grid>
             

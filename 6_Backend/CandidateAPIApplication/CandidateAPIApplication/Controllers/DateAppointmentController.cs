@@ -47,5 +47,11 @@ namespace CandidateAPIApplication.Controllers
             await _servicesDateAppointment.UpdateDateAppointment(id, dataDateAppointment);
             return Ok(dataDateAppointment);
         }
+
+        [HttpGet("Candidate/{id}")]
+        public async Task<DateAppointmentsModel> GetDateAppointmentsByCandidateId([FromRoute] int id)
+        {
+            return await _servicesDateAppointment.GetDateAppointmentsByCandidateId(id);
+        }
     }
 }

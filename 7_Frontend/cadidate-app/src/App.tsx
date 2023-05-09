@@ -7,6 +7,7 @@ import CreateCandidatePage from './Pages/CreateCandidatePage';
 import EvaluationPage from './Pages/EvaluationPage';
 import EditCandidatePage from './Pages/EditCandidatePage';
 import CommentCandidate from './Pages/CommentCandidatePage';
+import IsLoadingPage from './Pages/IsLoadingPage';
 
 function App() {
   

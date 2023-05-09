@@ -20,16 +20,7 @@ namespace CandidateAPIApplication.Models
 
         public string? PathImage { get; set; }
         public string? PathResume { get; set; }
-
-        [JsonIgnore]
-        public int? DateAppointmentId { get; set; }
-
-        [JsonIgnore]
-        public DateAppointmentsModel? DateAppointments { get; set; }
-
         public int StatusCodeID { get; set; }
 
-        [JsonIgnore]
-        public List<CandidatesAndCommentsModel>? ListCandidateAndComment { get; set; } 
     }
 }

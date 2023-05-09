@@ -3,21 +3,6 @@ import { CandidateBoardContextProvider } from "../AppointmentInterview/Candidate
 import CandidateBoard from "../AppointmentInterview/CandidateBoard";
 import { HeadTitle } from "./CandidateProfilesPage";
 
-interface IDialogSetDate{
-    open:boolean;
-    onClose:(value:string)=>void;
-}
-
-const DialogSetDate = (props:IDialogSetDate) =>{
-    return(
-        <Modal open={props.open} onClose={props.onClose}>
-            <Box>
-                
-            </Box>
-        </Modal>
-    );
-}
-
 export default function AppointmentInterviewPage(){
 
     return(

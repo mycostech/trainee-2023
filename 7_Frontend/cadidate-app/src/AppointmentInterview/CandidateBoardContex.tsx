@@ -1,107 +1,17 @@
 import { createContext, ReactElement, useCallback, useState, useEffect } from 'react'
 import { ICandidate, getAllCandidate, updateCandidateById } from '../Api/ApiCandidate'
+import { IApiDateAppointment, getAllDateAppointment } from '../Api/ApiDateAppointment'
 
-let testData:ICandidate[] = [
-   {
-    candidateId:1,
-    firstName:"string",
-    lastName:"string",
-    email:"string",
-    phoneNumber:"string",
-    image:undefined,
-    imageName:"string",
-    resume:undefined,
-    resumeName:"string",
-    statusCodeID:1
-   },
-   {
-    candidateId:2,
-    firstName:"string",
-    lastName:"string",
-    email:"string",
-    phoneNumber:"string",
-    image:undefined,
-    imageName:"string",
-    resume:undefined,
-    resumeName:"string",
-    statusCodeID:1
-   },
-   {
-    candidateId:3,
-    firstName:"string",
-    lastName:"string",
-    email:"string",
-    phoneNumber:"string",
-    image:undefined,
-    imageName:"string",
-    resume:undefined,
-    resumeName:"string",
-    statusCodeID:4
-   },
-   {
-    candidateId:4,
-    firstName:"string",
-    lastName:"string",
-    email:"string",
-    phoneNumber:"string",
-    image:undefined,
-    imageName:"string",
-    resume:undefined,
-    resumeName:"string",
-    statusCodeID:3
-   },
-   {
-    candidateId:5,
-    firstName:"string",
-    lastName:"string",
-    email:"string",
-    phoneNumber:"string",
-    image:undefined,
-    imageName:"string",
-    resume:undefined,
-    resumeName:"string",
-    statusCodeID:2
-   },
-   {
-    candidateId:6,
-    firstName:"string",
-    lastName:"string",
-    email:"string",
-    phoneNumber:"string",
-    image:undefined,
-    imageName:"string",
-    resume:undefined,
-    resumeName:"string",
-    statusCodeID:2
-   },
-   {
-    candidateId:7,
-    firstName:"string",
-    lastName:"string",
-    email:"string",
-    phoneNumber:"string",
-    image:undefined,
-    imageName:"string",
-    resume:undefined,
-    resumeName:"string",
-    statusCodeID:2
-   },
-   {
-    candidateId:8,
-    firstName:"string",
-    lastName:"string",
-    email:"string",
-    phoneNumber:"string",
-    image:undefined,
-    imageName:"string",
-    resume:undefined,
-    resumeName:"string",
-    statusCodeID:2
-   },
-]
+const getCandidateAndDateAppointment = ()=>{
+    return Promise.all([
+        getAllCandidate(),
+        getAllDateAppointment(),
+    ])
+}
 
 export interface ICandidateBoardContext{
     candidateLists:ICandidate[],
+    dateAppointmentLists:IApiDateAppointment[],
     onChangeStatus:(
         candidateId:string,
         destination:string
@@ -111,15 +21,14 @@ export interface ICandidateBoardContext{
 const CandidateBoardContext = createContext<ICandidateBoardContext>({} as ICandidateBoardContext)
 
 export function CandidateBoardContextProvider({children,}:{children:ReactElement}){
-    console.log("Provider")
     const [candidates, setCandidate] = useState<ICandidate[]>([] as ICandidate[])
-
+    const [ dateAppointment,setDateAppointment ] = useState<IApiDateAppointment[]>([] as IApiDateAppointment[])
     useEffect(()=>{
         const fetchData = async ()=>{
-            console.log("start use effect")
             try{
-                let data = await getAllCandidate()
-                setCandidate(data)
+                const [candidatesRes, dateAppointmentsRes ] = await getCandidateAndDateAppointment()
+                setCandidate(candidatesRes)
+                setDateAppointment(dateAppointmentsRes)
             }catch(err){
                 alert("error")
             }
@@ -141,7 +50,7 @@ export function CandidateBoardContextProvider({children,}:{children:ReactElement
         })
     },[])
     return(
-        <CandidateBoardContext.Provider value={{candidateLists:candidates,onChangeStatus}}>
+        <CandidateBoardContext.Provider value={{candidateLists:candidates,dateAppointmentLists:dateAppointment,onChangeStatus}}>
             {children}
         </CandidateBoardContext.Provider>
     );

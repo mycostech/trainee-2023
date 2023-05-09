@@ -10,15 +10,15 @@ export default function CardEvaluation(props:any){
         navigate(`/Evaluation/${candidateId}`)
     }
     return(
-        <Card sx={{width:280, backgroundColor:"#FFDF6A", borderRadius:"38px"}}>
+        <Card sx={{width:250, backgroundColor:"#FFDF6A", borderRadius:"38px"}}>
             <CardContent sx={{display:"flex", justifyContent:"center", padding:"0px"}}>
-                <Avatar src={Profile} alt='' sx={{width:70, height:70, border:3, borderColor:"#3DADA6", margin:"5px"}} />
-                <CardContent sx={{backgroundColor:"#47CCC4", width:150, padding:"0px", margin:"5px" } }>
+                <Avatar src={Profile} alt='' sx={{width:50, height:50, border:3, borderColor:"#3DADA6", margin:"5px"}} />
+                <CardContent sx={{backgroundColor:"#47CCC4", width:"160px", padding:"0px", margin:"5px" } }>
                     <Typography textAlign={"start"}>{props.firstName}</Typography>
                     <Typography textAlign={"end"}>{props.lastName}</Typography>
                 </CardContent>                
             </CardContent>
-            <CardActions sx={{justifyContent:"flex-end"}}>
+            <CardActions sx={{justifyContent:"flex-end", padding:"0px"}}>
                 <Button 
                     variant='text' 
                     sx={{color:"#DE5151"}}

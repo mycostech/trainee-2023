@@ -49,5 +49,11 @@ namespace CandidateAPIApplication.Controllers
             await _servicesCommentScore.DeleteCommentAndScore(id);
             return Ok();
         }
+
+        [HttpGet("Candidate/{id}")]
+        public async Task<List<CommentsScoresModel>> GetAllCommentAndScoreByCandidateId([FromRoute] int id)
+        {
+            return await _servicesCommentScore.GetAllCommentAndScoresByCandidateId(id);
+        } 
     }
 }

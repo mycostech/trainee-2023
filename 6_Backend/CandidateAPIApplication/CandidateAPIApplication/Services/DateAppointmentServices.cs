@@ -55,6 +55,11 @@ namespace CandidateAPIApplication.Services
             }
         }
 
+        public async Task<DateAppointmentsModel> GetDateAppointmentsByCandidateId(int candidateId)
+        {
+            return await _contextDateAppoint.DateAppointmentProfiles.FirstOrDefaultAsync(date => date.CandidateId == candidateId);
+        }
+
         public async Task UpdateDateAppointment(int id, DateAppointmentsModel dataDateAppointment)
         {
             try
