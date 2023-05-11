@@ -13,7 +13,12 @@ export default function CreateCandidatePage(){
 
     return(
         <div style={{display:"flex", flexDirection:"row", justifyContent:"center", paddingTop:"30px"}}>
-           <Paper color="#FFDF6A" fontColor="#009E95" head="Create Candidate" info="To create profile of candidates."/>
+           <Paper 
+                color="#FFDF6A" 
+                fontColor="#009E95" 
+                head="Create Candidate" 
+                info="To create profile of candidates."
+            />
            <CreateForm />
         </div>
     );

@@ -2,9 +2,13 @@
 using CandidateAPIApplication.Data;
 using CandidateAPIApplication.Models;
 using CandidateAPIApplication.Services.Interfaces;
+using Firebase.Storage;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 
@@ -24,12 +28,13 @@ namespace CandidateAPIApplication.Services
         public async Task ChangeStatusCode(int id, int statusCode)
         {
             try
-            { 
-                var findData = await _contextCandidate.CandidatesProfiles.FirstOrDefaultAsync(i=>i.CandidateId == id);
+            {
+                var findData = await _contextCandidate.CandidatesProfiles.FirstOrDefaultAsync(i => i.CandidateId == id);
                 findData.StatusCodeID = statusCode;
 
                 await _contextCandidate.SaveChangesAsync();
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
 
             }
@@ -37,8 +42,17 @@ namespace CandidateAPIApplication.Services
 
         public async Task CreateCandidate(CandidateUploadData dataCandidate)
         {
+            var streamImg = dataCandidate.ImageFile.OpenReadStream();
+            var taskImg = new FirebaseStorage("imageresume-357f8.appspot.com").Child("Images").Child(dataCandidate.ImageName).PutAsync(streamImg);
+            //task.Progress.ProgressChanged += (s, e) => Console.WriteLine($"Progress: {e.Percentage} %");
+            var streamResume = dataCandidate.ResumeFile.OpenReadStream();
+            var taskResume = new FirebaseStorage("imageresume-357f8.appspot.com").Child("Resumes").Child(dataCandidate.ResumeName).PutAsync(streamResume);
+
+            var downloadUrlImg = await taskImg;
+            var downloadUrlResume = await taskResume;
             try
             {
+                
                 var newcandidate = new CandidatesModel
                 {
                     CandidateId = dataCandidate.CandidateID,
@@ -46,13 +60,14 @@ namespace CandidateAPIApplication.Services
                     LastName = dataCandidate.LastName,
                     Email = dataCandidate.Email,
                     PhoneNumber = dataCandidate.PhoneNumber,
-                    PathImage = dataCandidate.ImageName,
-                    PathResume = dataCandidate.ResumeName,
+                    PathImage = downloadUrlImg,
+                    PathResume = downloadUrlResume,
                     StatusCodeID = 1,
                 };
                 _contextCandidate.CandidatesProfiles.Add(newcandidate);
                 await _contextCandidate.SaveChangesAsync();
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -117,9 +132,9 @@ namespace CandidateAPIApplication.Services
             var findData = await _contextCandidate.CandidatesProfiles.FirstOrDefaultAsync(x => x.CandidateId == id);
             if (findData != null)
             {
-                return new CandidatesModel() 
+                return new CandidatesModel()
                 {
-                    CandidateId= findData.CandidateId,
+                    CandidateId = findData.CandidateId,
                     FirstName = findData.FirstName,
                     LastName = findData.LastName,
                     Email = findData.Email,
@@ -139,9 +154,9 @@ namespace CandidateAPIApplication.Services
             var token = new JwtSecurityToken(
                     issuer: _configuration["JWT:ValidIssuer"],
                     audience: _configuration["JWT:ValidAudience"],
-                    expires:DateTime.Now.AddMinutes(30),
-                    claims:authClaim,
-                    signingCredentials:new SigningCredentials(authSigningKey,SecurityAlgorithms.HmacSha256Signature)
+                    expires: DateTime.Now.AddMinutes(30),
+                    claims: authClaim,
+                    signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256Signature)
                 );
             return token;
         }
@@ -159,7 +174,7 @@ namespace CandidateAPIApplication.Services
                     new Claim(ClaimTypes.Role, "admin")
                 };
 
-                var  token = GetToken(authClaim);
+                var token = GetToken(authClaim);
                 return new LoginResponse
                 {
                     Username = firstName + " " + lastName,
@@ -173,7 +188,7 @@ namespace CandidateAPIApplication.Services
         public async Task Register(RegisterContact dataRegister)
         {
             //var findData = await _contextCandidate.CandidatesProfile.FirstOrDefaultAsync(i=>i.Email == dataRegister.Email);
-            if (await _contextCandidate.CandidatesProfiles.AnyAsync(u=>u.Email == dataRegister.Email))
+            if (await _contextCandidate.CandidatesProfiles.AnyAsync(u => u.Email == dataRegister.Email))
             {
                 throw new Exception("Username are duplicated.");
             }

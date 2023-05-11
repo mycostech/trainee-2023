@@ -4,12 +4,12 @@ import { Box, Typography, Paper, IconButton} from '@mui/material';
 import CardAppointment from "./CardAppointment";
 import { useContext } from "react";
 import CandidateBoardContext from "./CandidateBoardContex";
+import { IApiDateAppointment } from "../Api/ApiDateAppointment";
 
 function ColumnAppointment({column}:{column:IColumnAppointment}){
     const { candidateLists, dateAppointmentLists } = useContext(CandidateBoardContext)
     const items = candidateLists.filter(data=>data.statusCodeID.toString() === column.columnId)
     const dateItems = dateAppointmentLists.filter(date=>items.some(item=> item.candidateId === date.candidateId))
-    console.log(dateItems)
     return(
         <Droppable key={column.columnId} droppableId={column.columnId}>
             {provide=>(
@@ -20,7 +20,11 @@ function ColumnAppointment({column}:{column:IColumnAppointment}){
                     </div>
                     <Paper variant="elevation" sx={{height:"70vh", overflow:"auto"}}  >
                         {items.map((data,index)=>(
-                            <CardAppointment index={index} candidate={data} key={index} />
+                            <CardAppointment 
+                                index={index} 
+                                candidate={data} 
+                                key={index} 
+                                date={dateItems.find(el=>el.candidateId===data.candidateId)||{}as IApiDateAppointment} />
                         ))}
                         {provide.placeholder}
                     </Paper>

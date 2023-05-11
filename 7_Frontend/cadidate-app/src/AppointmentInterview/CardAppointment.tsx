@@ -1,21 +1,25 @@
 import { Draggable } from 'react-beautiful-dnd'
-import { ICandidate } from '../Api/ApiCandidate';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { Card, CardContent, Avatar, Typography, CardActions, IconButton, Box } from '@mui/material';
-import Profile from '../Imgs/Profiles.jpg';
 import LexendExaRegular from '../fonts/static/LexendExa-Regular.ttf';
 import LexendExaThin from '../fonts/static/LexendExa-Thin.ttf';
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import DefineDateAppointment from '../Components/DefineDateAppointment';
+import { IApiDateAppointment } from '../Api/ApiDateAppointment';
+import { IGetCandidate } from '../Pages/CandidateProfilesPage';
+import CandidateBoardContext from './CandidateBoardContex';
 
-function CardAppointment({ index, candidate }: { index: number; candidate: ICandidate }) {
+function CardAppointment({ index, candidate, date }: { index: number; candidate: IGetCandidate, date:IApiDateAppointment }) {
     const [dialog, setDialog] = useState<boolean>(false)
+    const { onChangeDate } = useContext(CandidateBoardContext)
 
     const btnCloseDialog = () => {
         setDialog(false)
+        console.log(dialog)
     }
     const btnOpenDialog = () => {
         setDialog(true)
+        console.log(dialog)
     }
     const ShowDate = (value: string) => {
         if (value !== undefined) {
@@ -38,7 +42,7 @@ function CardAppointment({ index, candidate }: { index: number; candidate: ICand
                     <CardContent sx={{ display: "flex", flexDirection: "row", padding: "1px" }}>
                         <Avatar
                             alt={candidate.candidateId?.toString()}
-                            src={Profile}
+                            src={candidate.pathImage}
                             sx={{ width: 60, height: 60, margin: "4px" }}
                         />
                         <Box component={"div"} style={{ display: "flex", flexDirection: "column" }}>
@@ -64,10 +68,10 @@ function CardAppointment({ index, candidate }: { index: number; candidate: ICand
                             </Box>
                             <Box component={"div"} bgcolor={"yellow"}>
                                 <Typography textAlign={"center"} >
-                                    start: {ShowDate(undefined!) || "--/--/----"}
+                                    start: {ShowDate(date.startAppointment) || "--/--/----"}
                                 </Typography>
                                 <Typography textAlign={"center"}>
-                                    end: {ShowDate(undefined!) || "--/--/----"}
+                                    end: {ShowDate(date.endAppointment) || "--/--/----"}
                                 </Typography>
                             </Box>
                         </Box>
@@ -77,8 +81,8 @@ function CardAppointment({ index, candidate }: { index: number; candidate: ICand
                                 open={dialog} 
                                 onClose={btnCloseDialog} 
                                 candidate={candidate} 
-                                date={undefined!} 
-                                funcSetDate={undefined!} 
+                                date={date} 
+                                funcSetDate={onChangeDate} 
                             />
                         </CardActions>
                     </CardContent>

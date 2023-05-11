@@ -8,12 +8,13 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { getCandidateById } from "../Api/ApiCandidate";
 import IsLoadingPage from "../Pages/IsLoadingPage";
+import { IGetCandidate } from "../Pages/CandidateProfilesPage";
 
 export default function EditForm() {
     const { handleSubmit, register, formState: { isSubmitting } } = CandidateForm()
     const navigate = useNavigate()
     const params = useParams()
-    const [ candidate, setCandidate ] = useState<ICandidateForm>()
+    const [ candidate, setCandidate ] = useState<IGetCandidate>()
     const [ isLoading, setIsLoading ] = useState<boolean>(false)
     useEffect(()=>{
         const fData = async() =>{
@@ -52,13 +53,13 @@ export default function EditForm() {
                 <Paper sx={{padding:"2px"}}>
                     <Box component={"div"} alignItems={"center"} >
                         <Typography fontSize={64} textAlign={"center"} color={"black"}>EDIT</Typography>
-                        <Avatar src='' alt='' sx={{width:80,height:80}} />
-                        {TagUpload("", "image", register)}
+                        <Avatar src={candidate?.pathImage} alt='' sx={{width:80,height:80, margin:"auto"}} />
+                        {TagUpload("", "image", register, "auto")}
                         {TagInput(register, "First Name: ", "firstName")}
                         {TagInput(register, "Last Name: ", "lastName")}
                         {TagInput(register, "Email: ", "email")}
                         {TagInput(register, "Phone Number: ", "phone")}
-                        {TagUpload("Upload Resume:", "resume", register)}
+                        {TagUpload("Upload Resume:", "resume", register, "0px")}
                     </Box>
                     <Box component={"div"} display={"flex"} flexDirection={"column"} >
                         <Button 

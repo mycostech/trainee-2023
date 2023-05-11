@@ -1,5 +1,5 @@
 import EditIcon from '@mui/icons-material/Edit';
-import CardCandidate from '@mui/material/Card'
+import Card from '@mui/material/Card'
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -8,6 +8,8 @@ import Button from '@mui/material/Button';
 import Swal from 'sweetalert2';
 import { deleteCandidateById } from '../Api/ApiCandidate';
 import { useNavigate } from 'react-router-dom'
+import { Box } from '@mui/material';
+import { IGetCandidate } from '../Pages/CandidateProfilesPage';
 
 const AvatarStyle = { width:60, height:60, margin:"10px", strokeWidth:"3px" }
 const CardCandidateStyle = {backgroundColor:"#FFDF6A", width:280,height:130,display:'flex', borderRadius:"38px"}
@@ -17,17 +19,8 @@ const IConLargeStyle = {width:24, height:24}
 const IConSmallStyle = {width:20, height:20, color:"black"}
 // const HeadContainStyle = {}
 
-interface ICardCandidate{
-    candidateId:number,
-    imagePath?:string,
-    firstName:string,
-    lastName:string,
-    email?: string,
-    phone?: string,
-}
-
-export default function CardCadidate({candidateId,imagePath,firstName,lastName,email,phone}:ICardCandidate){
-
+// export default function CardCadidate({candidateId,imagePath,firstName,lastName,email,phone,resumePath}:ICardCandidate){
+export default function CardCandidate({candidate}:{candidate:IGetCandidate}){
     const navigate = useNavigate()
     const btnDeleteCandidate = () =>{
         Swal.fire({
@@ -38,7 +31,7 @@ export default function CardCadidate({candidateId,imagePath,firstName,lastName,e
             confirmButtonText:"Yes",
         }).then((result)=>{
             if(result.isConfirmed){
-                deleteCandidateById(candidateId)
+                deleteCandidateById(candidate.candidateId)
                 window.location.reload()
             }
         })
@@ -46,13 +39,36 @@ export default function CardCadidate({candidateId,imagePath,firstName,lastName,e
     }
 
     const btnEditCanidate = () =>{
-        navigate("/EditCandidate/" + candidateId.toString())
+        navigate("/EditCandidate/" + candidate.candidateId.toString())
+    }
+
+    const btnDownloadResume = () =>{
+        if(candidate.pathResume !== ""){
+            window.open(candidate.pathResume)
+        }else{
+            Swal.fire({
+                icon:"error",
+                position:"center",
+                title:"Not have resume file.",
+                timer:1500
+            })
+        }
+    }
+
+    const ShowButtonDownload = () =>{
+        if(candidate.pathResume !== ""){
+            return <Button onClick={()=>btnDownloadResume()}>Resume</Button>
+        }else{
+            return;
+        }
     }
     return(
         <>
-            <CardCandidate sx={CardCandidateStyle}>
-                <Avatar alt="" src={imagePath} sx={AvatarStyle} ></Avatar>
-
+            <Card sx={CardCandidateStyle}>
+                <Box component={"div"}  >
+                    <Avatar alt="" src={candidate.pathImage} sx={AvatarStyle} />
+                    {ShowButtonDownload()}
+                </Box>
                 <div className="CandidateInfo" style={{display:"flex", flexDirection:"column", padding:"2px"}}>
                     <div style={{
                                 display:'flex',
@@ -67,23 +83,22 @@ export default function CardCadidate({candidateId,imagePath,firstName,lastName,e
                     <div className="GroupName" style={{backgroundColor:"#47CCC4", margin:"0", padding:"3px", width:"192px"}}>
                         <div className='HeadContain' style={{display:'flex', flexDirection:'row', margin:'auto'}}>
 
-                            <h1 style={LexendaExaRegularStyle}>{firstName}</h1>
+                            <h1 style={LexendaExaRegularStyle}>{candidate.firstName}</h1>
                         </div>
-                        <h1 style={LastNameStyle}>{lastName}</h1>
+                        <h1 style={LastNameStyle}>{candidate.lastName}</h1>
                     </div>
 
                     <div className='GroupEmail' style={{display:'flex', gap:"12px"}}>
                         <EmailIcon sx={IConLargeStyle} />
-                        <p style={{margin:'0'}}>{email}</p>
+                        <p style={{margin:'0'}}>{candidate.email}</p>
                     </div>
 
                     <div className='GroupPhone' style={{display:'flex', gap:"12px"}}>
                         <PhoneIcon sx={IConLargeStyle} />
-                        <p style={{margin:'0'}}>{phone}</p>
+                        <p style={{margin:'0'}}>{candidate.phoneNumber}</p>
                     </div>
-
                 </div>
-            </CardCandidate>
+            </Card>
         </>
     );
 }

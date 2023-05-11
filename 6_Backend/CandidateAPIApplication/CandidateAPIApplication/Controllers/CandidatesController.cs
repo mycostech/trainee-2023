@@ -3,6 +3,7 @@ using CandidateAPIApplication.Models;
 using CandidateAPIApplication.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace CandidateAPIApplication.Controllers
 {
@@ -94,7 +95,6 @@ namespace CandidateAPIApplication.Controllers
         [HttpPut("ChangeStatusCode/{id}")]
         public async Task<IActionResult> ChangeCandidateStatus([FromRoute] int id, [FromBody] int statusCode)
         {
-            Console.WriteLine(statusCode);
             await _servicesCandidate.ChangeStatusCode(id,statusCode);
             return Ok();
         }

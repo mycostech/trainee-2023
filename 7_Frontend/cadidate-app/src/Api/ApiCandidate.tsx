@@ -1,6 +1,6 @@
 import axios from "axios"
 
-export interface ICandidate{
+export interface IApiCandidate{
     candidateId:number,
     firstName?:string,
     lastName?:string,
@@ -12,6 +12,8 @@ export interface ICandidate{
     resumeName:string,
     statusCodeID:number
 }
+
+
 
 export interface ICandidateStatus{
     candidateId:number,

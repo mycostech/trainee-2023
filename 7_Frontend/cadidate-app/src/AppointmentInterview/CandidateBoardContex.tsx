@@ -1,6 +1,7 @@
 import { createContext, ReactElement, useCallback, useState, useEffect } from 'react'
-import { ICandidate, getAllCandidate, updateCandidateById } from '../Api/ApiCandidate'
+import { getAllCandidate, updateCandidateById } from '../Api/ApiCandidate'
 import { IApiDateAppointment, getAllDateAppointment } from '../Api/ApiDateAppointment'
+import { IGetCandidate } from '../Pages/CandidateProfilesPage'
 
 const getCandidateAndDateAppointment = ()=>{
     return Promise.all([
@@ -10,19 +11,24 @@ const getCandidateAndDateAppointment = ()=>{
 }
 
 export interface ICandidateBoardContext{
-    candidateLists:ICandidate[],
+    candidateLists:IGetCandidate[],
     dateAppointmentLists:IApiDateAppointment[],
     onChangeStatus:(
         candidateId:string,
         destination:string
-    )=>void
+    )=>void,
+    onChangeDate:(
+        dateAppointmentId:number,
+        startAppointmentIn:string,
+        endAppointmentIn:string,
+    )=>void,
 }
 
 const CandidateBoardContext = createContext<ICandidateBoardContext>({} as ICandidateBoardContext)
 
 export function CandidateBoardContextProvider({children,}:{children:ReactElement}){
-    const [candidates, setCandidate] = useState<ICandidate[]>([] as ICandidate[])
-    const [ dateAppointment,setDateAppointment ] = useState<IApiDateAppointment[]>([] as IApiDateAppointment[])
+    const [candidates, setCandidate] = useState<IGetCandidate[]>([] as IGetCandidate[])
+    const [ dateAppointment, setDateAppointment ] = useState<IApiDateAppointment[]>([] as IApiDateAppointment[])
     useEffect(()=>{
         const fetchData = async ()=>{
             try{
@@ -49,8 +55,29 @@ export function CandidateBoardContextProvider({children,}:{children:ReactElement
             })
         })
     },[])
+
+    const onChangeDateAppointment = useCallback((dateAppointmentId:number, startAppointmentIn:string, endAppointmentIn:string)=>{
+        setDateAppointment((prev)=>{
+            return prev.map((m)=>{ 
+                if(dateAppointmentId === m.appointmentID){
+                    return{
+                        ...m,
+                        startAppointment:startAppointmentIn,
+                        endAppointment:endAppointmentIn
+                    }
+                }
+                return m;
+            })
+        })
+    },[])
+
     return(
-        <CandidateBoardContext.Provider value={{candidateLists:candidates,dateAppointmentLists:dateAppointment,onChangeStatus}}>
+        <CandidateBoardContext.Provider 
+            value={{
+                candidateLists:candidates,
+                dateAppointmentLists:dateAppointment,
+                onChangeStatus,
+                onChangeDate:onChangeDateAppointment}}>
             {children}
         </CandidateBoardContext.Provider>
     );

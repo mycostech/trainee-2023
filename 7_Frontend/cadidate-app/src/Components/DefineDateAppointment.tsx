@@ -23,11 +23,15 @@ export default function DefineDateAppointment(props:any){
         }else{
             const status = await updateDateAppointmentById(props.date.appointmentID,formData);
         }
-        props.funcSetDate(formData)
+        props.funcSetDate(props.date.appointmentID, values.startDate, values.endDate)
         Swal.fire({
             position:"center",
             icon:"success",
             title:"Add Date appointment successfull."
+        }).then((result)=>{
+            if(result.isConfirmed){
+                window.location.reload()
+            }
         })
     }
 
@@ -37,7 +41,7 @@ export default function DefineDateAppointment(props:any){
     return(
         <Modal open={props.open} onClose={props.onClose} sx={{display:"flex", justifyContent:"center", alignItems:"center", margin:"auto"}}>
             <Card sx={{width:"auto", height:"600px"}}>
-                <Avatar src='' alt='' sx={{width:100, height:100, alignContent:"center", margin:"auto"}} />
+                <Avatar src={props.candidate.pathImage} alt='' sx={{width:100, height:100, alignContent:"center", margin:"auto"}} />
                 <CardContent sx={{margin:"auto"}}>
                     <Typography textAlign={"center"} fontSize={32}>PROFILE</Typography>
                     <Typography fontSize={20}>Fisrt Name: {props.candidate.firstName}</Typography>

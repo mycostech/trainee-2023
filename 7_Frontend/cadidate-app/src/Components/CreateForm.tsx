@@ -2,7 +2,7 @@ import Button from '@mui/material/Button';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import TextField from '@mui/material/TextField';
-import { ICandidate, postCandidate } from '../Api/ApiCandidate';
+import { IApiCandidate, postCandidate } from '../Api/ApiCandidate';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import CandidateForm, { ICandidateForm } from './CandidateForm';
@@ -18,12 +18,12 @@ export const TagInput = (fnc: Function, word: string, tagName: string) => {
     )
 }
 
-export const TagUpload = (word: string, tag: string, fnc: Function) => {
+export const TagUpload = (word: string, tag: string, fnc: Function, mx:string) => {
     return (
         <div style={{ display: "flex", flexDirection: "row" }}>
             <p style={{ color: "black", margin: "2px" }}>{word}</p>
             <Button
-                sx={{ backgroundColor: "#47CCC4", color: "white" }}
+                sx={{ backgroundColor: "#47CCC4", color: "white", margin:mx}}
                 variant='contained'
                 component="label"
             >
@@ -41,18 +41,18 @@ export default function CreateForm() {
     const navigate = useNavigate()
 
     const SendFormCandidate: SubmitHandler<ICandidateForm> = async (values) => {
-        let newCandidate: ICandidate = {
-            candidateId: 0,
-            firstName: values.firstName,
-            lastName: values.lastName,
-            email: values.email,
-            phoneNumber: values.phone,
-            image: values.image[0], // null
-            imageName: values.image[0].name,
-            resume: values.resume[0], // null
-            resumeName: values.resume[0].name,
-            statusCodeID: 1
-        }
+        // let newCandidate: IApiCandidate = {
+        //     candidateId: 0,
+        //     firstName: values.firstName,
+        //     lastName: values.lastName,
+        //     email: values.email,
+        //     phoneNumber: values.phone,
+        //     image: values.image[0], // null
+        //     imageName: values.image[0].name,
+        //     resume: values.resume[0], // null
+        //     resumeName: values.resume[0].name,
+        //     statusCodeID: 1
+        // }
         // console.log(newCandidate.image)
         formData.append('candidateId','0')
         formData.append('imageFile',values.image[0])
@@ -98,8 +98,8 @@ export default function CreateForm() {
                     {TagInput(register, "Phone Number:", "phone")}
                 </div>
                 <div style={{ marginTop: "0px", marginBottom: "50px", marginLeft: "75px" }}>
-                    {TagUpload("Upload Image: ", "image", register)}
-                    {TagUpload("Upload Resume: ", "resume", register)}
+                    {TagUpload("Upload Image: ", "image", register,"0px")}
+                    {TagUpload("Upload Resume: ", "resume", register,"0px")}
                 </div>
                 <div style={{ display: "flex", flexDirection: "column", gap: "8px", padding: "0px", marginLeft: "12px", marginRight: "12px" }}>
                     <Button
