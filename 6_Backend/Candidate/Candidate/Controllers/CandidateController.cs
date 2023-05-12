@@ -18,6 +18,12 @@ namespace Candidate.Controllers
             _todoService = todoService;
 
         }
+        [HttpGet("Total")]
+        public List<TotalContract> Total()
+        {
+            var result = _todoService.GetTotal();
+            return result;
+        }
 
         [HttpGet("Dashboard")]
         public  List<DashboardContract> Dashboard()
@@ -47,6 +53,14 @@ namespace Candidate.Controllers
             return result;
         }
 
+        [HttpGet("SortInterview")]
+        public List<InterviewContract> SortInterview()
+        {
+            var result = _todoService.GetSortInterview();
+            return result;
+        }
+
+
         [HttpGet("Disqualified")]
         public List<DisqualifiedContract> Disqualified()
         {
@@ -61,22 +75,29 @@ namespace Candidate.Controllers
             return result;
         }
 
-        [HttpPut("/User/{id}")]
-        public async Task<EditContract> UpdateCandidate([FromBody] EditContract contract,Guid id)
+        [HttpGet("User")]
+        public List<EditScore> EditScore(Guid id)
         {
-            var result = await _todoService.UpdateCandidate(contract, id);
+            var result = _todoService.GetEditScore(id);
+            return result;
+        }
+
+        [HttpPut("Update")]
+        public async Task<EditContract> UpdateCandidate([FromBody] EditContract contract)
+        {
+            var result = await _todoService.UpdateCandidate(contract);
             return result;
         }
 
         [HttpPost("CreateUser")]
-        public async Task<CreateContract> CreateUser([FromBody] CreateContract contract)
+        public async Task<CreateContract> CreateUser([FromBody] CUContract contract)
         {
             var result = await _todoService.CreateUser(contract);
             return result;
         }
 
         [HttpDelete("{id}")]
-        public Task<UserAccount> DeleteUser(UserAccount id)
+        public Task<UserAccount> DeleteUser(Guid id)
         {
             var result = _todoService.DeleteUser(id);
             return result;

@@ -3,7 +3,7 @@ namespace Candidate.Contracts
 {
 	public class EditContract
 	{
-        //public Guid Id { get; set; }
+        public Guid Id { get; set; }
         public int? Status { get; set; }
         public int Experience { get; set; }
         public int Skill { get; set; }
@@ -12,7 +12,7 @@ namespace Candidate.Contracts
         public int Personality { get; set; }
         public string? Comment { get; set; }
         public float Evaluation { get; set; }
-        public DateTime? Meet { get; set; }
+        public string? Meet { get; set; }
         //public UrlFileContract? UrlFile { get; set; }
         //public ScoreContract? Score { get; set; }
         //public PictureContract? Picture { get; set; }
